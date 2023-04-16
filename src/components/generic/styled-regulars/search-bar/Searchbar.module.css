@@ -1,0 +1,15 @@
+ion-searchbar.search {
+  --background: #eaeaea;
+  --color: #909090;
+  --icon-color: #2b2b2b;
+  --border-radius: 100px;
+}
+.search ion-icon {
+  width: 12.83px !important;
+  padding-left: 10px;
+}
+.search input {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  padding-left: 35px !important;
+}
