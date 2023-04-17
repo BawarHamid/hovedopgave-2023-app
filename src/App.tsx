@@ -21,8 +21,13 @@ import "@ionic/react/css/display.css";
 /* Tailwind & Ant-d CSS imports */
 import "./theme/tailwind-setup.css";
 
+/* Theme variables */
+import "./theme/ionic-variables.css";
+import "./theme/variables.css";
+import "./theme/global.css";
+
 /** Screens imports */
-import WelcomeScreen from "./screens/WelcomeScreen";
+import LandingScreen from "./screens/authentication/LandingScreen";
 
 setupIonicReact();
 
@@ -35,7 +40,7 @@ const App = () => {
             {<Redirect to="/welcome" />}
           </Route>
 
-          <Route exact path="/welcome" component={WelcomeScreen} />
+          <Route exact path="/welcome" component={LandingScreen} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

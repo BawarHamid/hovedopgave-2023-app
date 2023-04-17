@@ -93,9 +93,9 @@ const AuthInput: React.FC<Props> = ({
         }`}
       >
         <IonInput
+          onIonChange={(e) => changeCallback(e.detail.value?.toString() ?? "")}
           value={value}
           placeholder={placeholder}
-          onIonChange={(e) => changeCallback("")}
           type={inputType}
           required
           className={`h-[3.7rem] items-center text-xs ${styles.placeholderColor}`}
