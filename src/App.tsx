@@ -28,6 +28,7 @@ import "./theme/global.css";
 
 /** Screens imports */
 import LandingScreen from "./screens/authentication/LandingScreen";
+import LoginScreen from "./screens/authentication/LoginScreen";
 
 setupIonicReact();
 
@@ -39,8 +40,9 @@ const App = () => {
           <Route exact path="/">
             {<Redirect to="/welcome" />}
           </Route>
-
+          {/* Home, auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
+          <Route exact path="/login" component={LoginScreen} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
