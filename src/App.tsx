@@ -26,9 +26,11 @@ import "./theme/ionic-variables.css";
 import "./theme/variables.css";
 import "./theme/global.css";
 
-/** Screens imports */
+/* Home, auth, profile-setup */
 import LandingScreen from "./screens/authentication/LandingScreen";
 import LoginScreen from "./screens/authentication/LoginScreen";
+import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
+import CheckMailScreen from "./screens/authentication/CheckMailScreen";
 
 setupIonicReact();
 
@@ -43,6 +45,12 @@ const App = () => {
           {/* Home, auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
           <Route exact path="/login" component={LoginScreen} />
+          <Route
+            exact
+            path="/forgot-password"
+            component={ForgotPasswordScreen}
+          />
+          <Route exact path="/check-mail" component={CheckMailScreen} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

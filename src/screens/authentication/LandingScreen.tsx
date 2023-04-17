@@ -36,7 +36,7 @@ const LandingScreen: React.FC = () => {
                 theme="yellow"
                 rounded
                 iconPosition="right"
-                onClick={() => router.push("/register")}
+                onClick={() => router.push("/forgot-password")}
               ></RegularButton>
             </div>
           </div>

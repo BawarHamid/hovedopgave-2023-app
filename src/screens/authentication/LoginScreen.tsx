@@ -19,9 +19,8 @@ const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isPasswordRevealed, setIsPasswordRevealed] = useState<boolean>(false);
-
   const router = useIonRouter();
-  console.log(email, password);
+
   return (
     <IonPage>
       <IonContent>
@@ -51,10 +50,13 @@ const LoginScreen: React.FC = () => {
               setShown={setIsPasswordRevealed}
             />
 
-            <RegularButton text="Login" />
+            <RegularButton text="Login" rounded />
 
             <div className="w-full flex justify-end mt-2">
-              <h5 onClick={() => router.push("/test1")} className="text-help">
+              <h5
+                onClick={() => router.push("/forgot-password")}
+                className="text-help"
+              >
                 Forgot password?
               </h5>
             </div>
