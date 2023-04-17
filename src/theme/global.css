@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* typography */
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+}
+
+h1 {
+  /* Size 20px/1.25rem */
+  @apply text-h-lg;
+  line-height: 1.75rem;
+}
+
+h2 {
+  /* Size 16px/1rem */
+  @apply text-h-md;
+  line-height: 1.5rem;
+  font-weight: 600 !important;
+}
+
+h3 {
+  /* Size 16px/1rem */
+  @apply text-base;
+  line-height: 1.5rem;
+  font-weight: 400 !important;
+}
+
+h4 {
+  /* Size 14px/0.875rem */
+  @apply text-sm;
+  line-height: 1.25rem;
+}
+
+h5 {
+  /* Size 12px/0.75rem */
+  @apply text-xs;
+  line-height: 1rem;
+}
+
+/* h6 {
+  @apply text-sm;
+  line-height: 16px;
+} */
+
+ul {
+  list-style-type: disc;
+  padding-left: 1.1rem;
+  font-size: 9px;
+  color: #ff3333;
+}
+
+/* Only top left and right? */
+ion-modal {
+  --border-radius: 16px;
+}
+
+/* // ion-modal.auto-height {
+//   &.bottom {
+//     align-items: flex-end;
+//   }
+
+//   --height: auto;
+
+//   .ion-page {
+//     position: relative;
+//     display: block;
+//     contain: content;
+
+//     .inner-content {
+//       max-height: 80vh;
+//       overflow: auto;
+//       padding: 10px;
+//     }
+//   }
+// } */

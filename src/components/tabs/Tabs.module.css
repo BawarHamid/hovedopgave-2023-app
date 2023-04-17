@@ -1,8 +1,0 @@
-.reelsStyling {
-  --background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px) !important;
-  border: none !important;
-  position: absolute !important;
-  bottom: 0 !important;
-  width: 100% !important;
-}

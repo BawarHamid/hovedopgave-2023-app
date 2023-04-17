@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 type Props = {
   text: string;
@@ -7,10 +7,14 @@ type Props = {
 };
 
 // TODO: change amount of characters to be amount of lines
-const CollapsableText: React.FC<Props> = ({ text, amountOfCharacters = 50, paddingLeft = 0 }) => {
+const CollapsableText: React.FC<Props> = ({
+  text,
+  amountOfCharacters = 50,
+  paddingLeft = 0,
+}) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const shouldShowMore = text.length > amountOfCharacters;
-  const className = paddingLeft ? `pl-${paddingLeft}` : '';
+  const className = paddingLeft ? `pl-${paddingLeft}` : "";
 
   return (
     <div className={className}>
@@ -19,7 +23,10 @@ const CollapsableText: React.FC<Props> = ({ text, amountOfCharacters = 50, paddi
           {text.slice(0, amountOfCharacters)}
           <br />
           {shouldShowMore && (
-            <span className="cursor-pointer font-bold" onClick={() => setIsCollapsed(false)}>
+            <span
+              className="cursor-pointer font-bold"
+              onClick={() => setIsCollapsed(false)}
+            >
               Show more...
             </span>
           )}
@@ -29,7 +36,10 @@ const CollapsableText: React.FC<Props> = ({ text, amountOfCharacters = 50, paddi
           {text}
           <br />
           {shouldShowMore && (
-            <span className="cursor-pointer font-bold" onClick={() => setIsCollapsed(true)}>
+            <span
+              className="cursor-pointer font-bold"
+              onClick={() => setIsCollapsed(true)}
+            >
               Show less...
             </span>
           )}
