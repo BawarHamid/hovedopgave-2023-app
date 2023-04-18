@@ -32,7 +32,7 @@ import LoginScreen from "./screens/authentication/LoginScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
 import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
-import SetupProfilePictureScreen from "./screens/profile-setup/SetupProfilePictureScreen";
+import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
 import TestFeedScreen from "./screens/feeds/TestFeedScreen";
 
 setupIonicReact();
@@ -58,7 +58,7 @@ const App = () => {
           <Route exact path="/profile-setup" component={ProfileSetupScreen} />
           <Route
             exact
-            path="/profile-picture-setup"
+            path="/profile-picture"
             component={SetupProfilePictureScreen}
           />
         </IonRouterOutlet>

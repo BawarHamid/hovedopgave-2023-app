@@ -5,19 +5,23 @@ type ProfileSetupStore = {
   last_name: string;
   username: string;
   profile_picture: string;
-  setProfileFull: (
+
+  setProfileInformation: (
     first_name: string,
     last_name: string,
-    username: string,
-    profile_picture: string
+    username: string
   ) => void;
+
+  setProfilePicture: (profile_picture: string) => void;
 };
 
 export const useProfileSetup = create<ProfileSetupStore>()((set) => ({
   first_name: "",
   last_name: "",
   username: "",
+  biography: "",
   profile_picture: "",
-  setProfileFull: (first_name, last_name, username, profile_picture) =>
-    set({ first_name, last_name, username, profile_picture }),
+  setProfileInformation: (first_name, last_name, username) =>
+    set({ first_name, last_name, username }),
+  setProfilePicture: (profile_picture) => set({ profile_picture }),
 }));

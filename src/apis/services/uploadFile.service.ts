@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { supabase } from "../supabase/supabaseClient";
 
-const publicBucket = "foodzilla-public-bucket";
+const publicBucket = "foodzilla-bucket";
 
 // TODO: maybe not finished.
 export const uploadFile = async (folder: "profilePicture", file: File) => {
