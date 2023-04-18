@@ -31,6 +31,8 @@ import LandingScreen from "./screens/authentication/LandingScreen";
 import LoginScreen from "./screens/authentication/LoginScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
+import SetupProfilePictureScreen from "./screens/profile-setup/SetupProfilePictureScreen";
 
 setupIonicReact();
 
@@ -51,6 +53,12 @@ const App = () => {
             component={ForgotPasswordScreen}
           />
           <Route exact path="/check-mail" component={CheckMailScreen} />
+          <Route exact path="/profile-setup" component={ProfileSetupScreen} />
+          <Route
+            exact
+            path="/profile-picture-setup"
+            component={SetupProfilePictureScreen}
+          />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
