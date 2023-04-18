@@ -1,13 +1,10 @@
 import { nanoid } from "nanoid";
 import { supabase } from "../supabase/supabaseClient";
 
-const publicBucket = "innrc-public-bucket";
+const publicBucket = "foodzilla-public-bucket";
 
 // TODO: maybe not finished.
-export const uploadFile = async (
-  folder: "profilePicture" | "albumCover",
-  file: File
-) => {
+export const uploadFile = async (folder: "profilePicture", file: File) => {
   const { data: userData } = await supabase.auth.getUser();
   const fileType = file.type.split("/")[1];
   if (userData.user) {

@@ -1,5 +1,33 @@
+import { ProfileInsert } from "../../types/types";
 import { uploadProfilePicture } from "../services/uploadFile.service";
 import { supabase } from "./supabaseClient";
+
+export const insertNewProfile = async (profile: ProfileInsert) =>
+  await supabase.from("profile").insert(profile);
+
+export const insertProfile = async (
+  uid: string,
+  firstname: string,
+  lastname: string,
+  username: string,
+  file: File
+) => {
+  const uploadData = await uploadProfilePicture(file);
+  // insert profile
+  const { error: insertProfile } = await supabase
+    .from("profile")
+    .insert({
+      id: uid,
+      first_name: firstname,
+      last_name: lastname,
+      username: username,
+      profile_picture: uploadData?.data.url || "",
+    })
+    .eq("id", uid)
+    .single();
+
+  if (insertProfile) throw new Error(insertProfile.message);
+};
 
 // export const updateAProfile = async (profile: ProfileUpdate) => await supabase_.from('profile').update(profile);
 
