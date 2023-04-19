@@ -5,33 +5,6 @@ import { supabase } from "./supabaseClient";
 export const insertNewProfile = async (profile: ProfileInsert) =>
   await supabase.from("profile").insert(profile);
 
-// export const insertProfile = async (
-//   uid: string,
-//   firstname: string,
-//   lastname: string,
-//   username: string,
-//   file?: File
-// ) => {
-//   // upload file if there is one
-//   let newAvatarURL;
-//   if (file) {
-//     const uploadData = await uploadProfilePicture(file);
-//     if (uploadData && uploadData.error) throw new Error(uploadData.error);
-//     if (uploadData && uploadData.data) newAvatarURL = uploadData.data.url;
-//   }
-
-//   // insert profile
-//   const { error: insertProfileError } = await supabase.from("profile").insert({
-//     id: uid,
-//     first_name: firstname,
-//     last_name: lastname,
-//     username: username,
-//     profile_picture: newAvatarURL,
-//   });
-
-//   if (insertProfileError) throw new Error(insertProfileError.message);
-// };
-
 // export const updateAProfile = async (profile: ProfileUpdate) => await supabase_.from('profile').update(profile);
 
 export const getProfile = async (uid: string) =>
