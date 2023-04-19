@@ -33,6 +33,7 @@ import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen"
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
 import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
 import SetupProfilePictureScreen from "./screens/profile-setup/SetupProfilePictureScreen";
+import RegisterScreen from "./screens/authentication/RegisterScreen";
 
 setupIonicReact();
 
@@ -47,6 +48,7 @@ const App = () => {
           {/* Home, auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
           <Route exact path="/login" component={LoginScreen} />
+          <Route exact path="/register" component={RegisterScreen} />
           <Route
             exact
             path="/forgot-password"
