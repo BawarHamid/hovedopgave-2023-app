@@ -1,5 +1,9 @@
+import { ProfileInsert } from "../../types/types";
 import { uploadProfilePicture } from "../services/uploadFile.service";
 import { supabase } from "./supabaseClient";
+
+export const insertNewProfile = async (profile: ProfileInsert) =>
+  await supabase.from("profile").insert(profile);
 
 // export const updateAProfile = async (profile: ProfileUpdate) => await supabase_.from('profile').update(profile);
 

@@ -29,11 +29,14 @@ import "./theme/global.css";
 /* Home, auth, profile-setup */
 import LandingScreen from "./screens/authentication/LandingScreen";
 import LoginScreen from "./screens/authentication/LoginScreen";
+import RegisterScreen from "./screens/authentication/RegisterScreen";
+import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
+import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
-import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
-import SetupProfilePictureScreen from "./screens/profile-setup/SetupProfilePictureScreen";
-import RegisterScreen from "./screens/authentication/RegisterScreen";
+
+// Test pages
+import TestFeedScreen from "./screens/feeds/TestFeedScreen";
 
 setupIonicReact();
 
@@ -58,9 +61,11 @@ const App = () => {
           <Route exact path="/profile-setup" component={ProfileSetupScreen} />
           <Route
             exact
-            path="/profile-picture-setup"
+            path="/profile-picture"
             component={SetupProfilePictureScreen}
           />
+          {/* testing */}
+          <Route exact path="/test-feed" component={TestFeedScreen} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

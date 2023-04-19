@@ -1,0 +1,8 @@
+.rounded {
+  --border-radius: 50%;
+  width: 112px;
+  height: 112px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  /* --background: #d9d9d9 */
+}

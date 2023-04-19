@@ -52,6 +52,8 @@ const ForgotPasswordScreen: React.FC = () => {
               text="Request reset link"
               rounded
               onClick={() => router.push("/check-mail")}
+              disabled={!email}
+              theme="yellow"
             />
           </form>
         </div>
