@@ -40,6 +40,7 @@ const CheckMailScreen: React.FC = () => {
             <RegularButton
               text="Back to login"
               rounded
+              theme="yellow"
               onClick={() => router.push("/login")}
             />
           </form>

@@ -92,6 +92,7 @@ const LoginScreen: React.FC = () => {
               onClick={handleLogin}
               disabled={isSubmitDisabled}
               rounded
+              theme="yellow"
             />
 
             <div className="w-full flex justify-end mt-2">

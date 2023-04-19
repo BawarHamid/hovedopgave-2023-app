@@ -90,40 +90,48 @@ const SetupProfilePictureScreen: React.FC = () => {
         color={"white-background"}
         className="h-full w-full flex justify-center items-center"
       >
-        <AuthHeader
-          title="Select Profile picture"
-          text="You are one step away, please select a profile picture!"
-          icon={chevronBack}
-          onClick={() => history.goBack()}
-        />
-        <div className="flex flex-col px-5 items-center">
-          <IonButton
-            className={`${styles.rounded}`}
-            color="light"
-            onClick={handleClick}
-          >
-            {!file ? (
-              <IonIcon icon={camera} size="large" color="medium" />
-            ) : (
-              <IonImg
-                className="h-full object-cover w-full"
-                src={URL.createObjectURL(file)}
-              />
-            )}
-          </IonButton>
-
-          <input
-            style={{ display: "none" }}
-            ref={inputRef}
-            type="file"
-            onChange={handleImageChange}
-            accept="image/png, image/jpeg"
+        <div className="flex flex-col h-full justify-start w-full px-6">
+          <AuthHeader
+            title="Select Profile picture"
+            text="You are one step away, please select a profile picture!"
+            icon={chevronBack}
+            onClick={() => history.goBack()}
           />
-          <h4 className="mt-5 text-help">
-            Click here to upload a profile picture
-          </h4>
-          <div className="my-8" />
-          <RegularButton text="Continue" onClick={handleContinue} />
+          <div className="flex flex-col items-center">
+            <IonButton
+              className={`${styles.rounded}`}
+              color="light"
+              onClick={handleClick}
+            >
+              {!file ? (
+                <IonIcon icon={camera} size="large" color="medium" />
+              ) : (
+                <IonImg
+                  className="h-full object-cover w-full"
+                  src={URL.createObjectURL(file)}
+                />
+              )}
+            </IonButton>
+
+            <input
+              style={{ display: "none" }}
+              ref={inputRef}
+              type="file"
+              onChange={handleImageChange}
+              accept="image/png, image/jpeg"
+            />
+            <h4 className="mt-5 text-help">
+              Click here to upload a profile picture
+            </h4>
+            <div className="my-8" />
+            <RegularButton
+              text="Continue"
+              onClick={handleContinue}
+              disabled={!file}
+              rounded
+              theme="yellow"
+            />
+          </div>
         </div>
       </IonContent>
     </IonPage>

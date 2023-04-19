@@ -38,7 +38,7 @@ const ProfileSetupScreen: React.FC = () => {
   // route protection and fetch profile
   useEffect(() => {
     if (!authUser) router.push("/login");
-  }, [router, authUser]);
+  }, [router, authUser, firstName, lastName, username]);
 
   //validation of username
   const validateUsernameDoesNotExist = async () => {
@@ -102,6 +102,8 @@ const ProfileSetupScreen: React.FC = () => {
               text="Continue"
               onClick={handleContinue}
               disabled={!firstName || !lastName || !username}
+              rounded
+              theme="yellow"
             />
           </div>
         </div>
