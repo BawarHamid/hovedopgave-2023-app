@@ -56,6 +56,7 @@ const SetupProfilePictureScreen: React.FC = () => {
   const handleContinue = async () => {
     if (file && userId) {
       const uploadData = await uploadProfilePicture(file);
+
       const profileToInsert: ProfileInsert = {
         id: userId,
         first_name: profile.first_name,
@@ -65,6 +66,7 @@ const SetupProfilePictureScreen: React.FC = () => {
       };
       profile.setProfilePicture(uploadData?.data.url || "");
       await insertNewProfile(profileToInsert);
+
       router.push("/test-feed");
 
       await presentAlert({

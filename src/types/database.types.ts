@@ -14,21 +14,21 @@ export interface Database {
           first_name: string;
           id: string;
           last_name: string;
-          profile_picture: string | null;
+          profile_picture: string;
           username: string;
         };
         Insert: {
           first_name: string;
           id: string;
           last_name: string;
-          profile_picture?: string | null;
+          profile_picture: string;
           username: string;
         };
         Update: {
           first_name?: string;
           id?: string;
           last_name?: string;
-          profile_picture?: string | null;
+          profile_picture?: string;
           username?: string;
         };
       };

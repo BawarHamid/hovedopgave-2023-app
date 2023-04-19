@@ -6,7 +6,7 @@ const publicBucket = "foodzilla-bucket";
 // TODO: maybe not finished.
 export const uploadFile = async (folder: "profilePicture", file: File) => {
   const { data: userData } = await supabase.auth.getUser();
-  const fileType = file.type.split("/")[1];
+  const fileType = file.type.split("/")[0];
   if (userData.user) {
     const { data, error } = await supabase.storage
       .from(publicBucket)
@@ -25,7 +25,7 @@ export const uploadProfilePicture = async (file: File) => {
   if (userData.user) {
     const { data, error } = await supabase.storage
       .from(publicBucket)
-      .upload(`${userData.user.id}/profilePicture`, file, { upsert: true });
+      .upload(`${userData.user.id}/profilePicture`, file, { upsert: false });
     if (data) {
       const { data: image } = supabase.storage
         .from(publicBucket)
