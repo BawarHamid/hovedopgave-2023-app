@@ -1,12 +1,15 @@
 import { nanoid } from "nanoid";
 import { supabase } from "../supabase/supabaseClient";
 
-const publicBucket = "foodzilla-bucket";
+const publicBucket = "innrc-public-bucket";
 
 // TODO: maybe not finished.
-export const uploadFile = async (folder: "profilePicture", file: File) => {
+export const uploadFile = async (
+  folder: "profilePicture" | "albumCover",
+  file: File
+) => {
   const { data: userData } = await supabase.auth.getUser();
-  const fileType = file.type.split("/")[0];
+  const fileType = file.type.split("/")[1];
   if (userData.user) {
     const { data, error } = await supabase.storage
       .from(publicBucket)
@@ -25,7 +28,7 @@ export const uploadProfilePicture = async (file: File) => {
   if (userData.user) {
     const { data, error } = await supabase.storage
       .from(publicBucket)
-      .upload(`${userData.user.id}/profilePicture`, file, { upsert: false });
+      .upload(`${userData.user.id}/profilePicture`, file, { upsert: true });
     if (data) {
       const { data: image } = supabase.storage
         .from(publicBucket)
