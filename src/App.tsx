@@ -29,10 +29,13 @@ import "./theme/global.css";
 /* Home, auth, profile-setup */
 import LandingScreen from "./screens/authentication/LandingScreen";
 import LoginScreen from "./screens/authentication/LoginScreen";
-import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
-import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+import RegisterScreen from "./screens/authentication/RegisterScreen";
 import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
 import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
+import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
+import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+
+// Test pages
 import TestFeedScreen from "./screens/feeds/TestFeedScreen";
 
 setupIonicReact();
@@ -48,7 +51,7 @@ const App = () => {
           {/* Home, auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
           <Route exact path="/login" component={LoginScreen} />
-          <Route exact path="/test-feed" component={TestFeedScreen} />
+          <Route exact path="/register" component={RegisterScreen} />
           <Route
             exact
             path="/forgot-password"
@@ -61,6 +64,8 @@ const App = () => {
             path="/profile-picture"
             component={SetupProfilePictureScreen}
           />
+          {/* testing */}
+          <Route exact path="/test-feed" component={TestFeedScreen} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
