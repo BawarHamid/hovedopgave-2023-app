@@ -13,17 +13,17 @@ import AuthInput, {
   AuthInputType,
 } from "../../components/authentication/auth-input/AuthInput";
 import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
-import { checkUserHasProfile } from "../../apis/supabase/profile";
-import { supabase } from "../../apis/supabase/supabaseClient";
 import { useAuthUserStore } from "../../store/user";
+import { supabase } from "../../apis/supabase/supabaseClient";
+import { checkUserHasProfile } from "../../apis/supabase/profile";
 
 const LoginScreen: React.FC = () => {
   const history = useHistory();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isPasswordRevealed, setIsPasswordRevealed] = useState<boolean>(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
-
+  const [isPasswordRevealed, setIsPasswordRevealed] = useState<boolean>(false);
   const router = useIonRouter();
   const [present, dismiss] = useIonLoading();
   const [presentAlert] = useIonAlert();
@@ -46,7 +46,7 @@ const LoginScreen: React.FC = () => {
       const hasProfile = await checkUserHasProfile(data.user.id);
       setAuthUser(data.user);
       await dismiss();
-      hasProfile ? router.push("/home") : router.push("/onboarding");
+      hasProfile ? router.push("/test-feed") : router.push("/profile-setup");
     } else {
       await dismiss();
       await presentAlert({
@@ -68,7 +68,7 @@ const LoginScreen: React.FC = () => {
             onClick={() => history.goBack()}
           />
 
-          <form className="w-full pt-10">
+          <form className="w-full pt-10" onSubmit={handleLogin}>
             <AuthInput
               type={AuthInputType.Email}
               value={email}
@@ -88,9 +88,10 @@ const LoginScreen: React.FC = () => {
 
             <RegularButton
               text="Login"
-              rounded
               onClick={handleLogin}
               disabled={isSubmitDisabled}
+              rounded
+              theme="yellow"
             />
 
             <div className="w-full flex justify-end mt-2">
