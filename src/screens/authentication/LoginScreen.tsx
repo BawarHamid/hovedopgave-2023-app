@@ -5,7 +5,7 @@ import {
   useIonLoading,
   useIonRouter,
 } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import AuthHeader from "../../components/generic/headers/auth-header/AuthHeader";
 import { chevronBack } from "ionicons/icons";
@@ -24,7 +24,6 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
   const [isPasswordRevealed, setIsPasswordRevealed] = useState<boolean>(false);
-
   const router = useIonRouter();
   const [present, dismiss] = useIonLoading();
   const [presentAlert] = useIonAlert();
