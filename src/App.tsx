@@ -38,8 +38,13 @@ import CheckMailScreen from "./screens/authentication/CheckMailScreen";
 // Test pages
 import TestFeedScreen from "./screens/feeds/TestFeedScreen";
 
-setupIonicReact();
+/* CRUD for recipes */
+import SetDishPictureScreen from "./screens/create-food-recipe/SetDishPictureScreen";
+import SetDishDescriptionScreen from "./screens/create-food-recipe/SetDishDescriptionScreen";
+import SetDishTitleScreen from "./screens/create-food-recipe/SetDishTitleScreen";
+import SetDishRecipeScreen from "./screens/create-food-recipe/SetDishRecipeScreen";
 
+setupIonicReact();
 const App = () => {
   return (
     <IonApp className="bg-white">
@@ -64,6 +69,17 @@ const App = () => {
             path="/profile-picture"
             component={SetupProfilePictureScreen}
           />
+
+          {/* create dish flow */}
+          <Route exact path="/set-title" component={SetDishTitleScreen} />
+          <Route
+            exact
+            path="/set-description"
+            component={SetDishDescriptionScreen}
+          />
+          <Route exact path="/set-recipe" component={SetDishRecipeScreen} />
+          <Route exact path="/set-picture" component={SetDishPictureScreen} />
+
           {/* testing */}
           <Route exact path="/test-feed" component={TestFeedScreen} />
         </IonRouterOutlet>
