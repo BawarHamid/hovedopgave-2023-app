@@ -43,6 +43,7 @@ import SetDishPictureScreen from "./screens/create-food-recipe/SetDishPictureScr
 import SetDishDescriptionScreen from "./screens/create-food-recipe/SetDishDescriptionScreen";
 import SetDishTitleScreen from "./screens/create-food-recipe/SetDishTitleScreen";
 import SetDishRecipeScreen from "./screens/create-food-recipe/SetDishRecipeScreen";
+import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
 
 setupIonicReact();
 const App = () => {
@@ -69,6 +70,7 @@ const App = () => {
             path="/profile-picture"
             component={SetupProfilePictureScreen}
           />
+          <Route exact path="/select-type" component={SelectUploadTypeScreen} />
 
           {/* create dish flow */}
           <Route exact path="/set-title" component={SetDishTitleScreen} />
