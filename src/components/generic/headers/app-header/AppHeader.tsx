@@ -48,7 +48,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
           <IonIcon
             icon={backIcon.icon}
             size="large"
-            className={`ml-[-0.7rem]
+            className={`ml-[-0.6rem]
               logoColor === "white" ? style.whiteIcon : style.blackIcon
             }`}
             onClick={backIcon.onClick}
@@ -73,7 +73,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
           </IonText>
         )}
         {homeIcon && (
-          <div className="flex mr-[-0.7rem]">
+          <div className="flex mr-[-0.6rem]">
             <IonIcon
               icon={homeIcon.icon}
               size="large"
