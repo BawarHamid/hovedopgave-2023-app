@@ -66,8 +66,16 @@ const SetDishTitleScreen: React.FC = () => {
             },
           }}
         />
-
-        <div className="flex flex-col items-center justify-between h-[12rem] mt-56">
+        <div>
+          <h2 className="text-center text-[rgb(174,176,184)] mt-10">
+            Hello there! <br />
+            It's wonderful to have you here. <br />
+            You are now starting the process of uploading <br />
+            your very own favorite food recipe, <br />
+            good luck!
+          </h2>
+        </div>
+        <div className="flex flex-col items-center justify-between h-[12rem] mt-28">
           <h3>Please enter the title of your dish! </h3>
           <IonItem className={`${styles.noPadding} w-72`}>
             <IonInput

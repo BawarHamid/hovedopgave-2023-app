@@ -47,6 +47,7 @@ const SelectUploadTypeScreen: React.FC = () => {
           <IonImg
             src={placeholderImg}
             className="object-cover overflow-hidden h-24"
+            onClick={() => router.push("/set-title")}
           />
           <div className="text-white font-bold text-[1.3rem] mt-[-40px] flex justify-start ml-3">
             Create Recpie
@@ -54,7 +55,11 @@ const SelectUploadTypeScreen: React.FC = () => {
 
           <IonCardContent className="mt-4">
             <div className="flex flex-row justify-between mx-1">
-              <IonIcon icon={restaurant} color="medium" />
+              <IonIcon
+                icon={restaurant}
+                color="medium"
+                onClick={() => router.push("/set-title")}
+              />
               <h4 className=" text-[rgb(157,159,166)]">Please select</h4>
               <IonIcon
                 icon={chevronForward}

@@ -113,11 +113,13 @@ const SetDishPictureScreen: React.FC = () => {
         />
 
         <h6 className="text-center text-brand-black mt-1">
-          As the last step before completing your dish, <br />
-          you will need to add a picture of the dish.
-          <br /> Please click below to add it.
+          As the last step before completing your upload, <br />
+          you will need to add a picture of the dish. <br />
+          <p className="text-help">
+            <br /> Please click below to add a image!
+          </p>
         </h6>
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center mt-2">
           <IonButton className={`${styles.rounded}`} onClick={handleClick}>
             {!file ? (
               <div className="flex flex-col gap-2 items-center">
