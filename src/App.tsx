@@ -45,7 +45,8 @@ import SetDishTitleScreen from "./screens/create-food-recipe/SetDishTitleScreen"
 import SetDishRecipeScreen from "./screens/create-food-recipe/SetDishRecipeScreen";
 import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
 
-setupIonicReact();
+setupIonicReact({ mode: "ios" });
+
 const App = () => {
   return (
     <IonApp className="bg-white">
