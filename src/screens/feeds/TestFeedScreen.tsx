@@ -6,24 +6,36 @@ import {
   IonCardTitle,
   IonContent,
   IonPage,
+  useIonRouter,
 } from "@ionic/react";
-import AuthHeader from "../../components/generic/headers/auth-header/AuthHeader";
-import { chevronBack } from "ionicons/icons";
+import { chevronBack, chevronForward } from "ionicons/icons";
 import { useHistory } from "react-router";
+import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
 
 const TestFeedScreen: React.FC = () => {
   const history = useHistory();
+  const router = useIonRouter();
 
   return (
     <IonPage>
       <IonContent>
         <div className="flex flex-col h-full justify-start w-full">
-          <AuthHeader
-            title="TestingScreen"
-            text="Testing feed after login................."
-            icon={chevronBack}
-            onClick={() => history.push("/welcome")}
+          <FlowHeader
+            flowTitle="testfeed!"
+            rightButtonIcon={{
+              icon: chevronForward,
+              onClick: () => {
+                router.push("/set-title");
+              },
+            }}
+            leftButton={{
+              icon: chevronBack,
+              onClick: () => {
+                history.goBack();
+              },
+            }}
           />
+
           <IonCard className="rounded-lg">
             <IonCardHeader>
               <IonCardTitle className="text-cyan-300 flex justify-center">

@@ -9,6 +9,32 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      dish: {
+        Row: {
+          description: string;
+          id: string;
+          profile_fk: string;
+          recipe: string;
+          recipe_picture: string;
+          title: string;
+        };
+        Insert: {
+          description: string;
+          id: string;
+          profile_fk: string;
+          recipe: string;
+          recipe_picture: string;
+          title: string;
+        };
+        Update: {
+          description?: string;
+          id?: string;
+          profile_fk?: string;
+          recipe?: string;
+          recipe_picture?: string;
+          title?: string;
+        };
+      };
       profile: {
         Row: {
           first_name: string;
