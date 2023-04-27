@@ -55,8 +55,9 @@ const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
 
   const handleContinue = async () => {
     if (userId) {
-      store.setDishInfo(title.trim(), userId);
+      // store.setDishInfo(title.trim(), userId);
       openSetDescriptionModal();
+      modalRef.current?.dismiss();
 
       await presentAlert({
         header: "Title added!",
@@ -71,36 +72,36 @@ const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
     }
   };
 
-  const canDismiss = async () => {
-    return new Promise<boolean>(async (resolve, reject) => {
-      await present({
-        header: "Are you sure you wanna cancel?",
-        buttons: [
-          {
-            text: "Yes",
-            role: "confirm",
-          },
-          {
-            text: "No",
-            role: "cancel",
-          },
-        ],
-        onWillDismiss: (ev) => {
-          if (ev.detail.role === "confirm") {
-            resolve(true);
-          } else {
-            reject();
-          }
-        },
-      });
-    });
-  };
+  // const canDismiss = async () => {
+  //   return new Promise<boolean>(async (resolve, reject) => {
+  //     await present({
+  //       header: "Are you sure you wanna cancel?",
+  //       buttons: [
+  //         {
+  //           text: "Yes",
+  //           role: "confirm",
+  //         },
+  //         {
+  //           text: "No",
+  //           role: "cancel",
+  //         },
+  //       ],
+  //       onWillDismiss: (ev) => {
+  //         if (ev.detail.role === "confirm") {
+  //           resolve(true);
+  //         } else {
+  //           reject();
+  //         }
+  //       },
+  //     });
+  //   });
+  // };
 
   return (
     <IonModal
       ref={modalRefTitle}
       trigger="open-modal"
-      canDismiss={canDismiss}
+      // canDismiss={canDismiss}
       presentingElement={presentingElement!}
     >
       <IonContent className="h-full w-full flex justify-center items-center">

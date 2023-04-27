@@ -12,13 +12,7 @@ import {
   useIonAlert,
   useIonRouter,
 } from "@ionic/react";
-import {
-  chevronForward,
-  chevronBack,
-  arrowUpCircleOutline,
-  close,
-} from "ionicons/icons";
-import FlowHeader from "../generic/headers/flow-header/FlowHeader";
+import { arrowUpCircleOutline, close } from "ionicons/icons";
 import RegularButton from "../generic/styled-regulars/button/RegularButton";
 import styles from "./SetPictureModal.module.css";
 import { useState, useEffect, useRef } from "react";
@@ -36,6 +30,8 @@ const SetPictureModal: React.FC<ModalProps> = ({ modalRefPicture }) => {
   // local state
   const [file, setFile] = useState<File | undefined>();
   const dish = useDishSetup();
+  const modalRef = useRef<HTMLIonModalElement>(null);
+  const routetofeed = () => router.push("/test-feed");
 
   // ion state and hooks
   const router = useIonRouter();
@@ -83,7 +79,6 @@ const SetPictureModal: React.FC<ModalProps> = ({ modalRefPicture }) => {
     if (file && userId) {
       const uploadData = await uploadRecipePicture(file);
       const dishToInsert: DishInsert = {
-        id: userId,
         title: dish.title,
         description: dish.description,
         recipe: dish.recipe,
@@ -93,7 +88,9 @@ const SetPictureModal: React.FC<ModalProps> = ({ modalRefPicture }) => {
 
       dish.setRecipePicture(uploadData?.data.url || "");
       await insertNewDish(dishToInsert);
-      router.push("/test-feed");
+      routetofeed();
+      modalRef.current?.dismiss();
+      modalRefPicture.current?.dismiss();
 
       await presentAlert({
         header: "The dish was successfully created",
@@ -108,36 +105,36 @@ const SetPictureModal: React.FC<ModalProps> = ({ modalRefPicture }) => {
     }
   };
 
-  const canDismiss = async () => {
-    return new Promise<boolean>(async (resolve, reject) => {
-      await present({
-        header: "Are you sure you wanna cancel?",
-        buttons: [
-          {
-            text: "Yes",
-            role: "confirm",
-          },
-          {
-            text: "No",
-            role: "cancel",
-          },
-        ],
-        onWillDismiss: (ev) => {
-          if (ev.detail.role === "confirm") {
-            resolve(true);
-          } else {
-            reject();
-          }
-        },
-      });
-    });
-  };
+  // const canDismiss = async () => {
+  //   return new Promise<boolean>(async (resolve, reject) => {
+  //     await present({
+  //       header: "Are you sure you wanna cancel?",
+  //       buttons: [
+  //         {
+  //           text: "Yes",
+  //           role: "confirm",
+  //         },
+  //         {
+  //           text: "No",
+  //           role: "cancel",
+  //         },
+  //       ],
+  //       onWillDismiss: (ev) => {
+  //         if (ev.detail.role === "confirm") {
+  //           resolve(true);
+  //         } else {
+  //           reject();
+  //         }
+  //       },
+  //     });
+  //   });
+  // };
 
   return (
     <IonModal
       ref={modalRefPicture}
       trigger="open-modal"
-      canDismiss={canDismiss}
+      // canDismiss={canDismiss}
       presentingElement={presentingElement!}
     >
       <IonContent

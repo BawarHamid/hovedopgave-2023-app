@@ -5,6 +5,12 @@ import {
   IonPage,
   IonContent,
   useIonAlert,
+  IonButton,
+  IonButtons,
+  IonHeader,
+  IonIcon,
+  IonLabel,
+  IonToolbar,
 } from "@ionic/react";
 import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
 import { useEffect, useState } from "react";
@@ -12,13 +18,14 @@ import styles from "./SetDishTitle.module.css";
 import { useDishSetup } from "../../store/setup-upload-dish";
 import { useHistory } from "react-router";
 import { useAuthUserStore } from "../../store/user";
-import { chevronForward, chevronBack } from "ionicons/icons";
-import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
+import { close } from "ionicons/icons";
+import RegularTextArea from "../../components/generic/styled-regulars/textarea/RegularTextArea";
 
 const SetDishTitleScreen: React.FC = () => {
   const history = useHistory();
   const router = useIonRouter();
   const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const store = useDishSetup();
   const [presentAlert] = useIonAlert();
 
@@ -32,7 +39,7 @@ const SetDishTitleScreen: React.FC = () => {
 
   const handleContinue = async () => {
     if (userId) {
-      store.setDishInfo(title.trim(), userId);
+      store.setDishInfo(title.trim(), description.trim(), userId);
       router.push("/set-description");
 
       await presentAlert({
@@ -51,21 +58,25 @@ const SetDishTitleScreen: React.FC = () => {
   return (
     <IonPage>
       <IonContent className="h-full w-full flex justify-center items-center">
-        <FlowHeader
-          flowTitle="Your own food recipe!"
-          rightButtonIcon={{
-            icon: chevronForward,
-            onClick: () => {
-              handleContinue();
-            },
-          }}
-          leftButton={{
-            icon: chevronBack,
-            onClick: () => {
-              history.goBack();
-            },
-          }}
-        />
+        <IonHeader>
+          <IonToolbar>
+            <div>
+              <h2 className="text-center ml-5">Your own food recipe!</h2>
+            </div>
+
+            <IonButtons slot="end">
+              <IonButton onClick={() => handleContinue()}>
+                <IonLabel className="font-bold">Save!</IonLabel>
+              </IonButton>
+            </IonButtons>
+
+            <IonButtons slot="start">
+              <IonButton onClick={() => history.goBack()}>
+                <IonIcon icon={close} size="large" />
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
         <div>
           <h2 className="text-center text-[rgb(174,176,184)] mt-10">
             Hello there! <br />
@@ -75,20 +86,32 @@ const SetDishTitleScreen: React.FC = () => {
             good luck!
           </h2>
         </div>
-        <div className="flex flex-col items-center justify-between h-[12rem] mt-28">
-          <h3>Please enter the title of your dish! </h3>
+        <div className="flex flex-col items-center justify-between h-[12rem] mt-5">
+          <h3> Please enter the desired name or title </h3>
           <IonItem className={`${styles.noPadding} w-72`}>
             <IonInput
-              className={"text-center text-[1.3rem] font-bold leading-10"}
+              className={"text-center text-[1.28rem] font-bold leading-10"}
               value={title}
               onIonChange={(e) => setTitle(e.detail.value?.toString() ?? "")}
               placeholder="Recipe Title"
             />
           </IonItem>
-          <div className="pt-4 w-full px-6">
+        </div>
+
+        <div className="flex flex-col h-full justify-start w-full px-5 mt-14">
+          <h3 className="text-brand-black text-center mb-1">
+            Please enter the description of the dish!
+          </h3>
+          <RegularTextArea
+            changeCallback={setDescription}
+            placeholder="Add a description to your dish...."
+            value={description}
+          />
+
+          <div className="pt-4 w-full">
             <RegularButton
               text="Next"
-              disabled={!title}
+              disabled={!title || !description}
               onClick={() => handleContinue()}
               rounded
               theme="yellow"

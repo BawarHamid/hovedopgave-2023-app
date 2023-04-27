@@ -16,14 +16,10 @@ import {
 } from "ionicons/icons";
 import placeholderImg from "../../static/assets/img/foodtableimg.png";
 import { useHistory } from "react-router";
-import { useRef } from "react";
-import SetTitleModal from "../../components/dish-modals/SetTitleModal";
 
 const SelectUploadTypeScreen: React.FC = () => {
   const history = useHistory();
   const router = useIonRouter();
-  const modalRef = useRef<HTMLIonModalElement>(null);
-  const openSetTitleModal = () => modalRef.current?.present();
 
   return (
     <IonPage>
@@ -48,11 +44,10 @@ const SelectUploadTypeScreen: React.FC = () => {
         </div>
 
         <IonCard className="rounded-[1.25rem] pb-1 mx-5">
-          <SetTitleModal modalRefTitle={modalRef} />
           <IonImg
             src={placeholderImg}
             className="object-cover overflow-hidden h-24"
-            onClick={() => openSetTitleModal()}
+            onClick={() => router.push("/set-title")}
           />
           <div className="text-white font-bold text-[1.3rem] mt-[-40px] flex justify-start ml-3">
             Create Recpie
@@ -63,13 +58,13 @@ const SelectUploadTypeScreen: React.FC = () => {
               <IonIcon
                 icon={restaurant}
                 color="medium"
-                onClick={() => openSetTitleModal()}
+                onClick={() => router.push("/set-title")}
               />
               <h4 className=" text-[rgb(157,159,166)]">Please select</h4>
               <IonIcon
                 icon={chevronForward}
                 color="medium"
-                onClick={() => openSetTitleModal()}
+                onClick={() => router.push("/set-title")}
               />
             </div>
           </IonCardContent>

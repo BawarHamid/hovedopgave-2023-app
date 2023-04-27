@@ -12,7 +12,7 @@ export interface Database {
       dish: {
         Row: {
           description: string;
-          id: string;
+          id: number;
           profile_fk: string;
           recipe: string;
           recipe_picture: string;
@@ -20,7 +20,7 @@ export interface Database {
         };
         Insert: {
           description: string;
-          id: string;
+          id?: number;
           profile_fk: string;
           recipe: string;
           recipe_picture: string;
@@ -28,7 +28,7 @@ export interface Database {
         };
         Update: {
           description?: string;
-          id?: string;
+          id?: number;
           profile_fk?: string;
           recipe?: string;
           recipe_picture?: string;

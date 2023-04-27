@@ -1,9 +1,13 @@
 import {
   IonButton,
+  IonButtons,
   IonContent,
+  IonHeader,
   IonIcon,
   IonImg,
+  IonLabel,
   IonPage,
+  IonToolbar,
   useIonAlert,
   useIonRouter,
 } from "@ionic/react";
@@ -13,10 +17,11 @@ import {
   arrowUpCircleOutline,
   chevronBack,
   chevronForward,
+  close,
 } from "ionicons/icons";
 import { useState, useRef, useEffect } from "react";
 import { useDishSetup } from "../../store/setup-upload-dish";
-import styles from "./create-dish.module.css";
+import styles from "./SetDishPictureScreenn.module.css";
 import { useAuthUserStore } from "../../store/user";
 import { uploadRecipePicture } from "../../apis/services/uploadFile.service";
 import { DishInsert } from "../../types/types";
@@ -64,7 +69,6 @@ const SetDishPictureScreen: React.FC = () => {
     if (file && userId) {
       const uploadData = await uploadRecipePicture(file);
       const dishToInsert: DishInsert = {
-        id: userId,
         title: dish.title,
         description: dish.description,
         recipe: dish.recipe,
@@ -96,21 +100,27 @@ const SetDishPictureScreen: React.FC = () => {
         color={"white-background"}
         className="h-full w-full flex justify-center items-center"
       >
-        <FlowHeader
-          flowTitle="Your own food recipe!"
-          rightButtonIcon={{
-            icon: chevronForward,
-            onClick: () => {
-              handleContinue();
-            },
-          }}
-          leftButton={{
-            icon: chevronBack,
-            onClick: () => {
-              history.goBack();
-            },
-          }}
-        />
+        <IonHeader>
+          <IonToolbar>
+            <div>
+              <h2 className="text-center ml-5">Your own food recipe!</h2>
+            </div>
+
+            <IonButtons slot="end">
+              <IonButton onClick={() => handleContinue()}>
+                <IonLabel className="font-bold" color="medium">
+                  Save!
+                </IonLabel>
+              </IonButton>
+            </IonButtons>
+
+            <IonButtons slot="start">
+              <IonButton onClick={() => history.goBack()}>
+                <IonIcon icon={close} size="large" color="medium" />
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
 
         <h6 className="text-center text-brand-black mt-1">
           As the last step before completing your upload, <br />

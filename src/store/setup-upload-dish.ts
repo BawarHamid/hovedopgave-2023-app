@@ -7,13 +7,11 @@ type CreateDishStore = {
   recipe_picture: string;
   profile_fk: string;
 
-  setDishDescription: (description: string) => void;
-
   setDishRecipe: (recipe: string) => void;
 
   setRecipePicture: (recipe_picture: string) => void;
 
-  setDishInfo: (title: string, profile_fk: string) => void;
+  setDishInfo: (title: string, description: string, profile_fk: string) => void;
 };
 
 export const useDishSetup = create<CreateDishStore>()((set) => ({
@@ -23,8 +21,7 @@ export const useDishSetup = create<CreateDishStore>()((set) => ({
   recipe_picture: "",
   profile_fk: "",
 
-  setDishInfo: (title, profile_fk) => set({ title, profile_fk }),
-  setDishDescription: (description) => set({ description }),
+  setDishInfo: (title, description, profile_fk) => set({ title, profile_fk }),
   setDishRecipe: (recipe) => set({ recipe }),
   setRecipePicture: (recipe_picture) => set({ recipe_picture }),
 }));

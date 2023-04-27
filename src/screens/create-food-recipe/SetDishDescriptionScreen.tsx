@@ -1,5 +1,16 @@
-import { IonPage, IonContent, useIonRouter, useIonAlert } from "@ionic/react";
-import { chevronBack, chevronForward } from "ionicons/icons";
+import {
+  IonPage,
+  IonContent,
+  useIonRouter,
+  useIonAlert,
+  IonButton,
+  IonButtons,
+  IonHeader,
+  IonIcon,
+  IonLabel,
+  IonToolbar,
+} from "@ionic/react";
+import { chevronBack, chevronForward, close } from "ionicons/icons";
 import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
@@ -26,7 +37,7 @@ const SetDishDescriptionScreen: React.FC = () => {
 
   const handleContinue = async () => {
     if (userId) {
-      dish.setDishDescription(description);
+      // dish.setDishDescription(description);
       router.push("/set-recipe");
 
       await presentAlert({
@@ -49,23 +60,29 @@ const SetDishDescriptionScreen: React.FC = () => {
         color={"white-background"}
         className="h-full w-full flex justify-center items-center"
       >
-        <FlowHeader
-          flowTitle="Your own food recipe!"
-          rightButtonIcon={{
-            icon: chevronForward,
-            onClick: () => {
-              handleContinue();
-            },
-          }}
-          leftButton={{
-            icon: chevronBack,
-            onClick: () => {
-              history.goBack();
-            },
-          }}
-        />
+        <IonHeader>
+          <IonToolbar>
+            <div>
+              <h2 className="text-center ml-5">Your own food recipe!</h2>
+            </div>
 
-        <div className="flex flex-col h-full justify-start w-full px-6 mt-5">
+            <IonButtons slot="end">
+              <IonButton onClick={() => handleContinue()}>
+                <IonLabel className="font-bold" color="medium">
+                  Save!
+                </IonLabel>
+              </IonButton>
+            </IonButtons>
+
+            <IonButtons slot="start">
+              <IonButton onClick={() => history.goBack()}>
+                <IonIcon icon={close} size="large" color="medium" />
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+
+        <div className="flex flex-col h-full justify-start w-full px-6 mt-10">
           <h3 className="text-brand-black mb-1">
             Please enter the description of the dish!
           </h3>
