@@ -10,8 +10,7 @@ import {
   IonLabel,
   IonToolbar,
 } from "@ionic/react";
-import { chevronBack, chevronForward, close } from "ionicons/icons";
-import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
+import { close } from "ionicons/icons";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
 import { useDishSetup } from "../../store/setup-upload-dish";
@@ -68,15 +67,13 @@ const SetDishRecipeScreen: React.FC = () => {
 
             <IonButtons slot="end">
               <IonButton onClick={() => handleContinue()}>
-                <IonLabel className="font-bold" color="medium">
-                  Save!
-                </IonLabel>
+                <IonLabel className="font-bold">Save!</IonLabel>
               </IonButton>
             </IonButtons>
 
             <IonButtons slot="start">
               <IonButton onClick={() => history.goBack()}>
-                <IonIcon icon={close} size="large" color="medium" />
+                <IonIcon icon={close} size="large" />
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -91,7 +88,7 @@ const SetDishRecipeScreen: React.FC = () => {
             placeholder="Add the recipe for the dish...."
             value={recipe}
           />
-          <div className="pt-4">
+          <div className="pt-2">
             <RegularButton
               text="Next"
               disabled={!recipe}

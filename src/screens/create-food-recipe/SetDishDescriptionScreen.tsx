@@ -10,11 +10,11 @@ import {
   IonLabel,
   IonToolbar,
 } from "@ionic/react";
-import { chevronBack, chevronForward, close } from "ionicons/icons";
-import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
+import { close } from "ionicons/icons";
+
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
-import { useDishSetup } from "../../store/setup-upload-dish";
+// import { useDishSetup } from "../../store/setup-upload-dish";
 import { useAuthUserStore } from "../../store/user";
 import RegularTextArea from "../../components/generic/styled-regulars/textarea/RegularTextArea";
 import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
@@ -25,7 +25,7 @@ const SetDishDescriptionScreen: React.FC = () => {
   const router = useIonRouter();
   const [presentAlert] = useIonAlert();
   const [description, setDescription] = useState<string>("");
-  const dish = useDishSetup();
+  // const dish = useDishSetup();
 
   // global state
   const userId = useAuthUserStore((state) => state.authUser?.id);

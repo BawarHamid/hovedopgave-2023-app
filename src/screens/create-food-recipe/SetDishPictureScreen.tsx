@@ -11,17 +11,11 @@ import {
   useIonAlert,
   useIonRouter,
 } from "@ionic/react";
-import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
 import { useHistory } from "react-router";
-import {
-  arrowUpCircleOutline,
-  chevronBack,
-  chevronForward,
-  close,
-} from "ionicons/icons";
+import { arrowUpCircleOutline, close } from "ionicons/icons";
 import { useState, useRef, useEffect } from "react";
 import { useDishSetup } from "../../store/setup-upload-dish";
-import styles from "./SetDishPictureScreenn.module.css";
+import styles from "./SetDishPictureScreen.module.css";
 import { useAuthUserStore } from "../../store/user";
 import { uploadRecipePicture } from "../../apis/services/uploadFile.service";
 import { DishInsert } from "../../types/types";
@@ -108,28 +102,27 @@ const SetDishPictureScreen: React.FC = () => {
 
             <IonButtons slot="end">
               <IonButton onClick={() => handleContinue()}>
-                <IonLabel className="font-bold" color="medium">
-                  Save!
-                </IonLabel>
+                <IonLabel className="font-bold">Save!</IonLabel>
               </IonButton>
             </IonButtons>
 
             <IonButtons slot="start">
               <IonButton onClick={() => history.goBack()}>
-                <IonIcon icon={close} size="large" color="medium" />
+                <IonIcon icon={close} size="large" />
               </IonButton>
             </IonButtons>
           </IonToolbar>
         </IonHeader>
 
-        <h6 className="text-center text-brand-black mt-1">
+        <h6 className="text-center text-brand-black mt-5">
           As the last step before completing your upload, <br />
           you will need to add a picture of the dish. <br />
+          <br />
           <p className="text-help">
             <br /> Please click below to add a image!
           </p>
         </h6>
-        <div className="flex justify-center mt-2">
+        <div className="flex justify-center mt-3">
           <IonButton className={`${styles.rounded}`} onClick={handleClick}>
             {!file ? (
               <div className="flex flex-col gap-2 items-center">
