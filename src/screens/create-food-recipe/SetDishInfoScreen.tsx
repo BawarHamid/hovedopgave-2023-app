@@ -14,7 +14,7 @@ import {
 } from "@ionic/react";
 import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
 import { useEffect, useState } from "react";
-import styles from "./SetDishTitle.module.css";
+import styles from "./SetDishInfoScreen.module.css";
 import { useDishSetup } from "../../store/setup-upload-dish";
 import { useHistory } from "react-router";
 import { useAuthUserStore } from "../../store/user";
@@ -78,7 +78,7 @@ const SetDishTitleScreen: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <div>
-          <h2 className="text-center text-[rgb(174,176,184)] mt-10">
+          <h2 className="text-center text-[rgb(174,176,184)] mt-5">
             Hello there! <br />
             It's wonderful to have you here. <br />
             You are now starting the process of uploading <br />
@@ -86,9 +86,9 @@ const SetDishTitleScreen: React.FC = () => {
             good luck!
           </h2>
         </div>
-        <div className="flex flex-col items-center justify-between h-[12rem] mt-5">
-          <h3> Please enter the desired name or title </h3>
-          <IonItem className={`${styles.noPadding} w-72`}>
+        <div className="flex flex-col items-center h-[12rem] mt-10">
+          <h3 className="mb-3"> Please enter the desired name or title </h3>
+          <IonItem className={`${styles.noPadding} w-80`}>
             <IonInput
               className={"text-center text-[1.28rem] font-bold leading-10"}
               value={title}
@@ -98,8 +98,8 @@ const SetDishTitleScreen: React.FC = () => {
           </IonItem>
         </div>
 
-        <div className="flex flex-col h-full justify-start w-full px-5 mt-14">
-          <h3 className="text-brand-black text-center mb-1">
+        <div className="flex flex-col h-full justify-start w-full px-6 mt-[-10px]">
+          <h3 className="text-brand-black mb-2">
             Please enter the description of the dish!
           </h3>
           <RegularTextArea
@@ -108,7 +108,7 @@ const SetDishTitleScreen: React.FC = () => {
             value={description}
           />
 
-          <div className="pt-4 w-full">
+          <div className="pt-2 w-full">
             <RegularButton
               text="Next"
               disabled={!title || !description}

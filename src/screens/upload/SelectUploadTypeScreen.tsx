@@ -16,14 +16,19 @@ import {
 } from "ionicons/icons";
 import placeholderImg from "../../static/assets/img/foodtableimg.png";
 import { useHistory } from "react-router";
+// import { useRef } from "react";
+import SetTitleModal from "../../components/dish-modals/SetTitleModal";
 
 const SelectUploadTypeScreen: React.FC = () => {
   const history = useHistory();
   const router = useIonRouter();
+  // const modalRef = useRef<HTMLIonModalElement>(null);
+  // const openModal = () => modalRef.current?.present();
 
   return (
     <IonPage>
       <IonContent className="h-full w-full flex justify-center items-center">
+        {/* <SetTitleModal modalRefTitle={modalRef} /> */}
         <AppHeader
           backIcon={{
             icon: chevronBack,
@@ -39,7 +44,7 @@ const SelectUploadTypeScreen: React.FC = () => {
           }}
         />
 
-        <div className="flex justify-start text-[1.3rem] ml-5 pt-4 pb-2 text-[rgb(157,159,166)]">
+        <div className="flex justify-start text-[1.3rem] ml-5 pt-4 text-[rgb(157,159,166)]">
           Select uploadtype
         </div>
 
@@ -47,7 +52,7 @@ const SelectUploadTypeScreen: React.FC = () => {
           <IonImg
             src={placeholderImg}
             className="object-cover overflow-hidden h-24"
-            onClick={() => router.push("/set-title")}
+            onClick={() => router.push("/set-info")}
           />
           <div className="text-white font-bold text-[1.3rem] mt-[-40px] flex justify-start ml-3">
             Create Recpie
@@ -58,13 +63,13 @@ const SelectUploadTypeScreen: React.FC = () => {
               <IonIcon
                 icon={restaurant}
                 color="medium"
-                onClick={() => router.push("/set-title")}
+                onClick={() => router.push("/set-info")}
               />
               <h4 className=" text-[rgb(157,159,166)]">Please select</h4>
               <IonIcon
                 icon={chevronForward}
                 color="medium"
-                onClick={() => router.push("/set-title")}
+                onClick={() => router.push("/set-info")}
               />
             </div>
           </IonCardContent>
