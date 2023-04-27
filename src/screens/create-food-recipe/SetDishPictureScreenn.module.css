@@ -1,0 +1,15 @@
+.rounded {
+  --border-radius: 5px;
+  width: 350px;
+  height: 250px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --background: #292929;
+}
+
+.icon {
+  width: 58px;
+  height: 58px;
+  /* Missing gradient */
+  color: rgb(254, 240, 138);
+}

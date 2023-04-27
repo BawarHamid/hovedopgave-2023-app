@@ -1,33 +1,42 @@
 import {
-  IonItem,
-  IonInput,
-  useIonRouter,
-  IonPage,
-  IonContent,
-  useIonAlert,
   IonButton,
   IonButtons,
+  IonContent,
   IonHeader,
   IonIcon,
+  IonInput,
+  IonItem,
   IonLabel,
+  IonModal,
   IonToolbar,
+  useIonActionSheet,
+  useIonAlert,
+  useIonRouter,
 } from "@ionic/react";
-import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
-import { useEffect, useState } from "react";
-import styles from "./SetDishTitle.module.css";
-import { useDishSetup } from "../../store/setup-upload-dish";
-import { useHistory } from "react-router";
-import { useAuthUserStore } from "../../store/user";
 import { close } from "ionicons/icons";
-import RegularTextArea from "../../components/generic/styled-regulars/textarea/RegularTextArea";
+import RegularButton from "../generic/styled-regulars/button/RegularButton";
+import { useState, useEffect, useRef } from "react";
+import { useDishSetup } from "../../store/setup-upload-dish";
+import { useAuthUserStore } from "../../store/user";
+import styles from "./SetTitleModal.module.css";
+import SetDescriptionModal from "./SetDescriptionModal";
 
-const SetDishTitleScreen: React.FC = () => {
-  const history = useHistory();
+type ModalProps = {
+  modalRefTitle: React.RefObject<HTMLIonModalElement>;
+};
+
+const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
+  const modalRef = useRef<HTMLIonModalElement>(null);
+  const openSetDescriptionModal = () => modalRef.current?.present();
+
   const router = useIonRouter();
   const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
   const store = useDishSetup();
   const [presentAlert] = useIonAlert();
+  const [presentingElement, setPresentingElement] =
+    useState<HTMLElement | null>(null);
+  const [present] = useIonActionSheet();
+  const page = useRef(null);
 
   // global statet
   const authUser = useAuthUserStore((state) => state.authUser);
@@ -35,12 +44,20 @@ const SetDishTitleScreen: React.FC = () => {
 
   useEffect(() => {
     if (!authUser) router.push("/login");
+    else {
+      setPresentingElement(page.current);
+    }
   }, [router, authUser]);
+
+  const handleDismiss = () => {
+    modalRefTitle.current?.dismiss();
+  };
 
   const handleContinue = async () => {
     if (userId) {
-      store.setDishInfo(title.trim(), description.trim(), userId);
-      router.push("/set-recipe");
+      // store.setDishInfo(title.trim(), userId);
+      openSetDescriptionModal();
+      modalRef.current?.dismiss();
 
       await presentAlert({
         header: "Title added!",
@@ -55,9 +72,40 @@ const SetDishTitleScreen: React.FC = () => {
     }
   };
 
+  // const canDismiss = async () => {
+  //   return new Promise<boolean>(async (resolve, reject) => {
+  //     await present({
+  //       header: "Are you sure you wanna cancel?",
+  //       buttons: [
+  //         {
+  //           text: "Yes",
+  //           role: "confirm",
+  //         },
+  //         {
+  //           text: "No",
+  //           role: "cancel",
+  //         },
+  //       ],
+  //       onWillDismiss: (ev) => {
+  //         if (ev.detail.role === "confirm") {
+  //           resolve(true);
+  //         } else {
+  //           reject();
+  //         }
+  //       },
+  //     });
+  //   });
+  // };
+
   return (
-    <IonPage>
+    <IonModal
+      ref={modalRefTitle}
+      trigger="open-modal"
+      // canDismiss={canDismiss}
+      presentingElement={presentingElement!}
+    >
       <IonContent className="h-full w-full flex justify-center items-center">
+        <SetDescriptionModal modalRefDescription={modalRef} />
         <IonHeader>
           <IonToolbar>
             <div>
@@ -66,13 +114,15 @@ const SetDishTitleScreen: React.FC = () => {
 
             <IonButtons slot="end">
               <IonButton onClick={() => handleContinue()}>
-                <IonLabel className="font-bold">Save!</IonLabel>
+                <IonLabel className="font-bold" color="medium">
+                  Save!
+                </IonLabel>
               </IonButton>
             </IonButtons>
 
             <IonButtons slot="start">
-              <IonButton onClick={() => history.goBack()}>
-                <IonIcon icon={close} size="large" />
+              <IonButton onClick={() => handleDismiss()}>
+                <IonIcon icon={close} size="large" color="medium" />
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -86,7 +136,7 @@ const SetDishTitleScreen: React.FC = () => {
             good luck!
           </h2>
         </div>
-        <div className="flex flex-col items-center justify-between h-[12rem] mt-5">
+        <div className="flex flex-col items-center justify-between h-[12rem] mt-28">
           <h3> Please enter the desired name or title </h3>
           <IonItem className={`${styles.noPadding} w-72`}>
             <IonInput
@@ -96,22 +146,10 @@ const SetDishTitleScreen: React.FC = () => {
               placeholder="Recipe Title"
             />
           </IonItem>
-        </div>
-
-        <div className="flex flex-col h-full justify-start w-full px-5 mt-14">
-          <h3 className="text-brand-black text-center mb-1">
-            Please enter the description of the dish!
-          </h3>
-          <RegularTextArea
-            changeCallback={setDescription}
-            placeholder="Add a description to your dish...."
-            value={description}
-          />
-
-          <div className="pt-4 w-full">
+          <div className="pt-4 w-full px-6">
             <RegularButton
               text="Next"
-              disabled={!title || !description}
+              disabled={!title}
               onClick={() => handleContinue()}
               rounded
               theme="yellow"
@@ -119,8 +157,8 @@ const SetDishTitleScreen: React.FC = () => {
           </div>
         </div>
       </IonContent>
-    </IonPage>
+    </IonModal>
   );
 };
 
-export default SetDishTitleScreen;
+export default SetTitleModal;

@@ -1,31 +1,41 @@
 import {
-  IonPage,
-  IonContent,
-  useIonRouter,
-  useIonAlert,
   IonButton,
   IonButtons,
+  IonContent,
   IonHeader,
   IonIcon,
   IonLabel,
+  IonModal,
   IonToolbar,
+  useIonActionSheet,
+  useIonAlert,
+  useIonRouter,
 } from "@ionic/react";
-import { chevronBack, chevronForward, close } from "ionicons/icons";
-import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
-import { useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { close } from "ionicons/icons";
+import { useState, useEffect, useRef } from "react";
 import { useDishSetup } from "../../store/setup-upload-dish";
 import { useAuthUserStore } from "../../store/user";
-import RegularTextArea from "../../components/generic/styled-regulars/textarea/RegularTextArea";
-import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
+import RegularButton from "../generic/styled-regulars/button/RegularButton";
+import RegularTextArea from "../generic/styled-regulars/textarea/RegularTextArea";
+import SetRecipeModal from "./SetRecipeModal";
 
-const SetDishDescriptionScreen: React.FC = () => {
+type ModalProps = {
+  modalRefDescription: React.RefObject<HTMLIonModalElement>;
+};
+
+const SetDescriptionModal: React.FC<ModalProps> = ({ modalRefDescription }) => {
   // ion state and hooks
-  const history = useHistory();
+  const modalRef = useRef<HTMLIonModalElement>(null);
+  const openSetRecipeModal = () => modalRef.current?.present();
+
   const router = useIonRouter();
   const [presentAlert] = useIonAlert();
   const [description, setDescription] = useState<string>("");
   const dish = useDishSetup();
+  const [presentingElement, setPresentingElement] =
+    useState<HTMLElement | null>(null);
+  const [present] = useIonActionSheet();
+  const page = useRef(null);
 
   // global state
   const userId = useAuthUserStore((state) => state.authUser?.id);
@@ -33,12 +43,20 @@ const SetDishDescriptionScreen: React.FC = () => {
 
   useEffect(() => {
     if (!authUser) router.push("/login");
+    else {
+      setPresentingElement(page.current);
+    }
   }, [router, authUser]);
+
+  const handleDismiss = () => {
+    modalRefDescription.current?.dismiss();
+  };
 
   const handleContinue = async () => {
     if (userId) {
       // dish.setDishDescription(description);
-      // router.push("/set-recipe");
+      openSetRecipeModal();
+      modalRef.current?.dismiss();
 
       await presentAlert({
         header: "Description added!",
@@ -53,13 +71,44 @@ const SetDishDescriptionScreen: React.FC = () => {
     }
   };
 
+  // const canDismiss = async () => {
+  //   return new Promise<boolean>(async (resolve, reject) => {
+  //     await present({
+  //       header: "Are you sure you wanna cancel?",
+  //       buttons: [
+  //         {
+  //           text: "Yes",
+  //           role: "confirm",
+  //         },
+  //         {
+  //           text: "No",
+  //           role: "cancel",
+  //         },
+  //       ],
+  //       onWillDismiss: (ev) => {
+  //         if (ev.detail.role === "confirm") {
+  //           resolve(true);
+  //         } else {
+  //           reject();
+  //         }
+  //       },
+  //     });
+  //   });
+  // };
+
   return (
-    <IonPage>
+    <IonModal
+      ref={modalRefDescription}
+      trigger="open-modal"
+      // canDismiss={canDismiss}
+      presentingElement={presentingElement!}
+    >
       <IonContent
         fullscreen
         color={"white-background"}
         className="h-full w-full flex justify-center items-center"
       >
+        <SetRecipeModal modalRefRecipe={modalRef} />
         <IonHeader>
           <IonToolbar>
             <div>
@@ -75,7 +124,7 @@ const SetDishDescriptionScreen: React.FC = () => {
             </IonButtons>
 
             <IonButtons slot="start">
-              <IonButton onClick={() => history.goBack()}>
+              <IonButton onClick={() => handleDismiss()}>
                 <IonIcon icon={close} size="large" color="medium" />
               </IonButton>
             </IonButtons>
@@ -102,8 +151,8 @@ const SetDishDescriptionScreen: React.FC = () => {
           </div>
         </div>
       </IonContent>
-    </IonPage>
+    </IonModal>
   );
 };
 
-export default SetDishDescriptionScreen;
+export default SetDescriptionModal;

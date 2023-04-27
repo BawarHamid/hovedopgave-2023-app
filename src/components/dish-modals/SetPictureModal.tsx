@@ -6,37 +6,40 @@ import {
   IonIcon,
   IonImg,
   IonLabel,
-  IonPage,
+  IonModal,
   IonToolbar,
+  useIonActionSheet,
   useIonAlert,
   useIonRouter,
 } from "@ionic/react";
-import FlowHeader from "../../components/generic/headers/flow-header/FlowHeader";
-import { useHistory } from "react-router";
-import {
-  arrowUpCircleOutline,
-  chevronBack,
-  chevronForward,
-  close,
-} from "ionicons/icons";
-import { useState, useRef, useEffect } from "react";
-import { useDishSetup } from "../../store/setup-upload-dish";
-import styles from "./SetDishPictureScreenn.module.css";
-import { useAuthUserStore } from "../../store/user";
+import { arrowUpCircleOutline, close } from "ionicons/icons";
+import RegularButton from "../generic/styled-regulars/button/RegularButton";
+import styles from "./SetPictureModal.module.css";
+import { useState, useEffect, useRef } from "react";
 import { uploadRecipePicture } from "../../apis/services/uploadFile.service";
-import { DishInsert } from "../../types/types";
 import { insertNewDish } from "../../apis/supabase/dish";
-import RegularButton from "../../components/generic/styled-regulars/button/RegularButton";
+import { useDishSetup } from "../../store/setup-upload-dish";
+import { useAuthUserStore } from "../../store/user";
+import { DishInsert } from "../../types/types";
 
-const SetDishPictureScreen: React.FC = () => {
+type ModalProps = {
+  modalRefPicture: React.RefObject<HTMLIonModalElement>;
+};
+
+const SetPictureModal: React.FC<ModalProps> = ({ modalRefPicture }) => {
   // local state
   const [file, setFile] = useState<File | undefined>();
   const dish = useDishSetup();
+  const modalRef = useRef<HTMLIonModalElement>(null);
+  const routetofeed = () => router.push("/test-feed");
 
   // ion state and hooks
-  const history = useHistory();
   const router = useIonRouter();
   const [presentAlert] = useIonAlert();
+  const [presentingElement, setPresentingElement] =
+    useState<HTMLElement | null>(null);
+  const [present] = useIonActionSheet();
+  const page = useRef(null);
 
   // global state
   const userId = useAuthUserStore((state) => state.authUser?.id);
@@ -44,7 +47,14 @@ const SetDishPictureScreen: React.FC = () => {
 
   useEffect(() => {
     if (!authUser) router.push("/login");
+    else {
+      setPresentingElement(page.current);
+    }
   }, [router, authUser]);
+
+  const handleDismiss = () => {
+    modalRefPicture.current?.dismiss();
+  };
 
   // refs
   const inputRef = useRef<HTMLInputElement>(null);
@@ -78,7 +88,9 @@ const SetDishPictureScreen: React.FC = () => {
 
       dish.setRecipePicture(uploadData?.data.url || "");
       await insertNewDish(dishToInsert);
-      router.push("/test-feed");
+      routetofeed();
+      modalRef.current?.dismiss();
+      modalRefPicture.current?.dismiss();
 
       await presentAlert({
         header: "The dish was successfully created",
@@ -93,8 +105,38 @@ const SetDishPictureScreen: React.FC = () => {
     }
   };
 
+  // const canDismiss = async () => {
+  //   return new Promise<boolean>(async (resolve, reject) => {
+  //     await present({
+  //       header: "Are you sure you wanna cancel?",
+  //       buttons: [
+  //         {
+  //           text: "Yes",
+  //           role: "confirm",
+  //         },
+  //         {
+  //           text: "No",
+  //           role: "cancel",
+  //         },
+  //       ],
+  //       onWillDismiss: (ev) => {
+  //         if (ev.detail.role === "confirm") {
+  //           resolve(true);
+  //         } else {
+  //           reject();
+  //         }
+  //       },
+  //     });
+  //   });
+  // };
+
   return (
-    <IonPage>
+    <IonModal
+      ref={modalRefPicture}
+      trigger="open-modal"
+      // canDismiss={canDismiss}
+      presentingElement={presentingElement!}
+    >
       <IonContent
         fullscreen
         color={"white-background"}
@@ -115,7 +157,7 @@ const SetDishPictureScreen: React.FC = () => {
             </IonButtons>
 
             <IonButtons slot="start">
-              <IonButton onClick={() => history.goBack()}>
+              <IonButton onClick={() => handleDismiss()}>
                 <IonIcon icon={close} size="large" color="medium" />
               </IonButton>
             </IonButtons>
@@ -162,8 +204,8 @@ const SetDishPictureScreen: React.FC = () => {
           />
         </div>
       </IonContent>
-    </IonPage>
+    </IonModal>
   );
 };
 
-export default SetDishPictureScreen;
+export default SetPictureModal;

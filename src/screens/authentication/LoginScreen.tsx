@@ -46,7 +46,7 @@ const LoginScreen: React.FC = () => {
       const hasProfile = await checkUserHasProfile(data.user.id);
       setAuthUser(data.user);
       await dismiss();
-      hasProfile ? router.push("/test-feed") : router.push("/profile-setup");
+      hasProfile ? router.push("/select-type") : router.push("/profile-setup");
     } else {
       await dismiss();
       await presentAlert({
