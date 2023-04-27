@@ -11,7 +11,6 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { close } from "ionicons/icons";
-
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
 // import { useDishSetup } from "../../store/setup-upload-dish";
