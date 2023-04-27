@@ -38,7 +38,7 @@ const SetDishDescriptionScreen: React.FC = () => {
   const handleContinue = async () => {
     if (userId) {
       // dish.setDishDescription(description);
-      router.push("/set-recipe");
+      // router.push("/set-recipe");
 
       await presentAlert({
         header: "Description added!",

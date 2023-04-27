@@ -40,7 +40,7 @@ const SetDishTitleScreen: React.FC = () => {
   const handleContinue = async () => {
     if (userId) {
       store.setDishInfo(title.trim(), description.trim(), userId);
-      router.push("/set-description");
+      router.push("/set-recipe");
 
       await presentAlert({
         header: "Title added!",
