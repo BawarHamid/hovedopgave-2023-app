@@ -34,6 +34,7 @@ import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
 import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+import YourFeedScreen from "./screens/feeds/YourFeedScreen";
 
 // Test pages
 import TestFeedScreen from "./screens/feeds/TestFeedScreen";
@@ -56,7 +57,7 @@ const App = () => {
           <Route exact path="/">
             {<Redirect to="/welcome" />}
           </Route>
-          {/* Home, auth, profile-setup*/}
+          {/* Auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />
@@ -73,6 +74,9 @@ const App = () => {
             component={SetupProfilePictureScreen}
           />
           <Route exact path="/select-type" component={SelectUploadTypeScreen} />
+
+          {/* home/yourfeed*/}
+          <Route exact path="/home" component={YourFeedScreen} />
 
           {/* create dish flow */}
           <Route exact path="/set-info" component={SetDishInfoScreen} />
