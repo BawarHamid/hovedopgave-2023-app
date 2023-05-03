@@ -1,6 +1,15 @@
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
+import {
+  IonApp,
+  IonLoading,
+  IonRouterOutlet,
+  setupIonicReact,
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Session } from "@supabase/supabase-js";
+import { useAuthUserStore } from "./store/user";
+import { supabase } from "./apis/supabase/supabaseClient";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -48,8 +57,7 @@ import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
 
 setupIonicReact({ mode: "ios" });
 // setupIonicReact();
-
-const App = () => {
+const App: React.FC = () => {
   return (
     <IonApp className="bg-white">
       <IonReactRouter>
@@ -57,6 +65,12 @@ const App = () => {
           <Route exact path="/">
             {<Redirect to="/welcome" />}
           </Route>
+
+          {/* Redirects */}
+          {/* <Route exact path="/"> - not working
+            <Redirect to={session ? "/home" : "/welcome"} />
+          </Route> */}
+
           {/* Auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
           <Route exact path="/login" component={LoginScreen} />

@@ -78,6 +78,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             Skip
           </IonText>
         )}
+        {addIcon && (
+          <div className="flex mr-[-0.5rem] pt-2">
+            <IonIcon
+              icon={addIcon.icon}
+              size="large"
+              onClick={addIcon.onClick}
+            />
+          </div>
+        )}
         {homeIcon && (
           <div className="flex mr-[-0.6rem]">
             <IonIcon
@@ -93,15 +102,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
               icon={profileIcon.icon}
               size="large"
               onClick={profileIcon.onClick}
-            />
-          </div>
-        )}
-        {addIcon && (
-          <div className="flex mr-[-0.6rem]">
-            <IonIcon
-              icon={addIcon.icon}
-              size="large"
-              onClick={addIcon.onClick}
             />
           </div>
         )}

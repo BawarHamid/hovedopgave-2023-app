@@ -9,26 +9,31 @@ import {
 } from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
 import {
+  addCircleOutline,
   chevronBack,
   chevronForward,
-  homeOutline,
   restaurant,
 } from "ionicons/icons";
 import placeholderImg from "../../static/assets/img/foodtableimg.png";
 import { useHistory } from "react-router";
-// import { useRef } from "react";
-// import SetTitleModal from "../../components/dish-modals/SetTitleModal";
+import { useEffect } from "react";
+import { useAuthUserStore } from "../../store/user";
 
 const SelectUploadTypeScreen: React.FC = () => {
   const history = useHistory();
   const router = useIonRouter();
-  // const modalRef = useRef<HTMLIonModalElement>(null);
-  // const openModal = () => modalRef.current?.present();
+
+  const authUser = useAuthUserStore((state) => state.authUser);
+
+  useEffect(() => {
+    if (!authUser) router.push("/login");
+  }, [router, authUser]);
+
+  console.log(authUser?.id);
 
   return (
     <IonPage>
       <IonContent className="h-full w-full flex justify-center items-center">
-        {/* <SetTitleModal modalRefTitle={modalRef} /> */}
         <AppHeader
           backIcon={{
             icon: chevronBack,
@@ -36,10 +41,10 @@ const SelectUploadTypeScreen: React.FC = () => {
               history.goBack();
             },
           }}
-          homeIcon={{
-            icon: homeOutline,
+          addIcon={{
+            icon: addCircleOutline,
             onClick: () => {
-              router.push("/test-feed");
+              router.push("/set-info");
             },
           }}
         />

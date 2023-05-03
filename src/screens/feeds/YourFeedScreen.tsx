@@ -1,10 +1,4 @@
-import {
-  IonContent,
-  IonList,
-  IonPage,
-  IonSpinner,
-  useIonRouter,
-} from "@ionic/react";
+import { IonContent, IonPage, IonSpinner, useIonRouter } from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
 import { addCircle, chevronBack } from "ionicons/icons";
 import { useHistory } from "react-router";
