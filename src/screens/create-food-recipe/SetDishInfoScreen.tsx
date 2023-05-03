@@ -43,7 +43,7 @@ const SetDishTitleScreen: React.FC = () => {
       router.push("/set-recipe");
 
       await presentAlert({
-        header: "Title added!",
+        header: "Info added!",
         buttons: ["OK"],
       });
     } else {

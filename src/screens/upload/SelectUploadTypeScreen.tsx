@@ -17,7 +17,7 @@ import {
 import placeholderImg from "../../static/assets/img/foodtableimg.png";
 import { useHistory } from "react-router";
 // import { useRef } from "react";
-import SetTitleModal from "../../components/dish-modals/SetTitleModal";
+// import SetTitleModal from "../../components/dish-modals/SetTitleModal";
 
 const SelectUploadTypeScreen: React.FC = () => {
   const history = useHistory();

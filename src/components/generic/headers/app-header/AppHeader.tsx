@@ -17,6 +17,7 @@ type AppHeaderProps = {
   addIcon?: Icon;
   chatIcon?: Icon;
   homeIcon?: Icon;
+  profileIcon?: Icon;
 };
 
 // test on phone if notification bar pushes or goes over contet
@@ -27,11 +28,16 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   addIcon,
   chatIcon,
   homeIcon,
+  profileIcon,
 }) => {
   const isLogoLeft =
-    addIcon && chatIcon && !backIcon && !skipIcon && !homeIcon ? true : false;
+    addIcon && chatIcon && !backIcon && !skipIcon && !homeIcon && !profileIcon
+      ? true
+      : false;
   const isLogoLeftAndBackIcon =
-    addIcon && chatIcon && backIcon && !skipIcon && !homeIcon ? true : false;
+    addIcon && chatIcon && backIcon && !skipIcon && !homeIcon && !profileIcon
+      ? true
+      : false;
 
   return (
     <div
@@ -78,6 +84,24 @@ const AppHeader: React.FC<AppHeaderProps> = ({
               icon={homeIcon.icon}
               size="large"
               onClick={homeIcon.onClick}
+            />
+          </div>
+        )}
+        {profileIcon && (
+          <div className="flex mr-[-0.6rem]">
+            <IonIcon
+              icon={profileIcon.icon}
+              size="large"
+              onClick={profileIcon.onClick}
+            />
+          </div>
+        )}
+        {addIcon && (
+          <div className="flex mr-[-0.6rem]">
+            <IonIcon
+              icon={addIcon.icon}
+              size="large"
+              onClick={addIcon.onClick}
             />
           </div>
         )}

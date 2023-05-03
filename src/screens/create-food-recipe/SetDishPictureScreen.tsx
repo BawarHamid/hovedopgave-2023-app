@@ -72,7 +72,7 @@ const SetDishPictureScreen: React.FC = () => {
 
       dish.setRecipePicture(uploadData?.data.url || "");
       await insertNewDish(dishToInsert);
-      router.push("/test-feed");
+      router.push("/home");
 
       await presentAlert({
         header: "The dish was successfully created",
@@ -133,6 +133,7 @@ const SetDishPictureScreen: React.FC = () => {
               <IonImg
                 className="h-full object-cover w-full"
                 src={URL.createObjectURL(file)}
+                // src={`${URL.createObjectURL(file)}?${Math.random()}`}
               />
             )}
           </IonButton>

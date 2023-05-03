@@ -5,5 +5,4 @@ import { supabase } from "./supabaseClient";
 export const insertNewDish = async (dish: DishInsert) =>
   await supabase.from("dish").insert(dish);
 
-export const getDish = async (uid: string) =>
-  await supabase.from("dish").select("*").eq("profile_fk", uid).single();
+export const getAllDishes = async () => await supabase.from("dish").select("*");
