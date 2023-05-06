@@ -4,6 +4,7 @@ type RecipeCardProps = {
   recipeText: string;
 };
 
+//mangler styling til punktform måske? og afstand mellem linjerne..
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipeText }) => {
   return (
     <IonCard className="mx-2 rounded-3xl">

@@ -4,6 +4,7 @@ type DescriptionCardProps = {
   descriptionText: string;
 };
 
+//mangler styling til flottere tekst, afstand mellem linjerne mm..?.
 const DescriptionCard: React.FC<DescriptionCardProps> = ({
   descriptionText,
 }) => {
