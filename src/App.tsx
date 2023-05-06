@@ -54,6 +54,7 @@ import SetDishDescriptionScreen from "./screens/create-food-recipe/SetDishDescri
 import SetDishInfoScreen from "./screens/create-food-recipe/SetDishInfoScreen";
 import SetDishRecipeScreen from "./screens/create-food-recipe/SetDishRecipeScreen";
 import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
+// import ViewDishModal from "./components/modals/switch-between-modal/ViewDishModal";
 
 setupIonicReact({ mode: "ios" });
 // setupIonicReact();
@@ -104,6 +105,7 @@ const App: React.FC = () => {
 
           {/* testing */}
           <Route exact path="/test-feed" component={TestFeedScreen} />
+          {/* <Route exact path="/test1" component={ViewDishModal} /> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

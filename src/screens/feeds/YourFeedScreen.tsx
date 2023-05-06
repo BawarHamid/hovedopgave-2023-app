@@ -1,30 +1,41 @@
 import { IonContent, IonPage, IonSpinner, useIonRouter } from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
-import { addCircle, chevronBack } from "ionicons/icons";
+import { addCircleOutline, chevronBack } from "ionicons/icons";
 import { useHistory } from "react-router";
 import DishCard from "../../components/content/cards/DishCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthUserStore } from "../../store/user";
 import { getAllDishes } from "../../apis/supabase/dish";
 import { Dish } from "../../types/types";
+import ViewDishModal from "../../components/modals/switch-between-modal/ViewDishModal";
 
 const YourFeedScreen: React.FC = () => {
   const history = useHistory();
   const router = useIonRouter();
   const [alldishes, setAllDishes] = useState<Dish[]>();
-
-  // global state
+  const [selectedDish, setSelectedDish] = useState<Dish>();
+  const modalRef = useRef<HTMLIonModalElement>(null);
   const authUser = useAuthUserStore((state) => state.authUser);
 
-  // route protection and fetch profile
   useEffect(() => {
     if (!authUser) router.push("/login");
-    if (authUser) getAllDishes().then((d) => d.data && setAllDishes(d.data));
+    if (authUser)
+      getAllDishes().then((d) => {
+        d.data && setAllDishes(d.data);
+      });
   }, [router, authUser]);
+
+  const openViewDishModal = (dish: Dish) => {
+    setSelectedDish(dish);
+    modalRef.current?.present();
+  };
 
   return (
     <IonPage>
       <IonContent>
+        {selectedDish && (
+          <ViewDishModal modalRef={modalRef} selectedDish={selectedDish} />
+        )}
         <AppHeader
           backIcon={{
             icon: chevronBack,
@@ -32,10 +43,10 @@ const YourFeedScreen: React.FC = () => {
               history.goBack();
             },
           }}
-          profileIcon={{
-            icon: addCircle,
+          addIcon={{
+            icon: addCircleOutline,
             onClick: () => {
-              router.push("/select-type");
+              router.push("/set-info");
             },
           }}
         />
@@ -43,25 +54,25 @@ const YourFeedScreen: React.FC = () => {
         <div className="flex justify-start text-[1.3rem] ml-6 pt-4 text-[rgb(157,159,166)]">
           Your Feed!
         </div>
-
-        {/* {alldishes?.map((d) => (
-          <>
-            <DishCard dishSrc={d.recipe_picture} dishTitle={d.title} />
-          </>
-        ))} */}
-
-        {alldishes ? (
-          <>
-            {alldishes?.map((d) => (
-              <DishCard dishSrc={d.recipe_picture} dishTitle={d.title} />
-            ))}
-          </>
-        ) : (
-          <div className="flex justify-center">
-            <h2>Loading dishes from db...</h2>
-            <IonSpinner />
-          </div>
-        )}
+        <div className="mt-[-15px]">
+          {alldishes ? (
+            <>
+              {alldishes?.map((d) => (
+                <DishCard
+                  key={d.id}
+                  dishSrc={d.recipe_picture}
+                  dishTitle={d.title}
+                  onClick={() => openViewDishModal(d)}
+                />
+              ))}
+            </>
+          ) : (
+            <div className="flex justify-center mt-48">
+              <h2>Please wait..</h2>
+              <IonSpinner />
+            </div>
+          )}
+        </div>
       </IonContent>
     </IonPage>
   );

@@ -13,14 +13,14 @@ import {
   useIonRouter,
 } from "@ionic/react";
 import { arrowUpCircleOutline, close } from "ionicons/icons";
-import RegularButton from "../generic/styled-regulars/button/RegularButton";
+import RegularButton from "../../generic/styled-regulars/button/RegularButton";
 import styles from "./SetPictureModal.module.css";
 import { useState, useEffect, useRef } from "react";
-import { uploadRecipePicture } from "../../apis/services/uploadFile.service";
-import { insertNewDish } from "../../apis/supabase/dish";
-import { useDishSetup } from "../../store/setup-upload-dish";
-import { useAuthUserStore } from "../../store/user";
-import { DishInsert } from "../../types/types";
+import { uploadRecipePicture } from "../../../apis/services/uploadFile.service";
+import { insertNewDish } from "../../../apis/supabase/dish";
+import { useDishSetup } from "../../../store/setup-upload-dish";
+import { useAuthUserStore } from "../../../store/user";
+import { DishInsert } from "../../../types/types";
 
 type ModalProps = {
   modalRefPicture: React.RefObject<HTMLIonModalElement>;

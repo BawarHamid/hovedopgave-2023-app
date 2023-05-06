@@ -9,9 +9,9 @@ import {
 } from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
 import {
-  addCircleOutline,
   chevronBack,
   chevronForward,
+  personCircleOutline,
   restaurant,
 } from "ionicons/icons";
 import placeholderImg from "../../static/assets/img/foodtableimg.png";
@@ -41,10 +41,10 @@ const SelectUploadTypeScreen: React.FC = () => {
               history.goBack();
             },
           }}
-          addIcon={{
-            icon: addCircleOutline,
+          profileIcon={{
+            icon: personCircleOutline,
             onClick: () => {
-              router.push("/set-info");
+              router.push("/home");
             },
           }}
         />

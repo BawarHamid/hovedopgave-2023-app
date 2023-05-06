@@ -4,8 +4,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInput,
-  IonItem,
   IonLabel,
   IonModal,
   IonToolbar,
@@ -14,33 +12,34 @@ import {
   useIonRouter,
 } from "@ionic/react";
 import { close } from "ionicons/icons";
-import RegularButton from "../generic/styled-regulars/button/RegularButton";
 import { useState, useEffect, useRef } from "react";
-import { useDishSetup } from "../../store/setup-upload-dish";
-import { useAuthUserStore } from "../../store/user";
-import styles from "./SetTitleModal.module.css";
-import SetDescriptionModal from "./SetDescriptionModal";
+import { useDishSetup } from "../../../store/setup-upload-dish";
+import { useAuthUserStore } from "../../../store/user";
+import RegularButton from "../../generic/styled-regulars/button/RegularButton";
+import RegularTextArea from "../../generic/styled-regulars/textarea/RegularTextArea";
+import SetPictureModal from "./SetPictureModal";
 
 type ModalProps = {
-  modalRefTitle: React.RefObject<HTMLIonModalElement>;
+  modalRefRecipe: React.RefObject<HTMLIonModalElement>;
 };
 
-const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
+const SetRecipeModal: React.FC<ModalProps> = ({ modalRefRecipe }) => {
+  // ion state and hooks
   const modalRef = useRef<HTMLIonModalElement>(null);
-  const openSetDescriptionModal = () => modalRef.current?.present();
+  const openSetPictureModal = () => modalRef.current?.present();
 
   const router = useIonRouter();
-  const [title, setTitle] = useState<string>("");
-  const store = useDishSetup();
   const [presentAlert] = useIonAlert();
+  const [recipe, setRecipe] = useState<string>("");
+  const dish = useDishSetup();
   const [presentingElement, setPresentingElement] =
     useState<HTMLElement | null>(null);
   const [present] = useIonActionSheet();
   const page = useRef(null);
 
-  // global statet
-  const authUser = useAuthUserStore((state) => state.authUser);
+  // global state
   const userId = useAuthUserStore((state) => state.authUser?.id);
+  const authUser = useAuthUserStore((state) => state.authUser);
 
   useEffect(() => {
     if (!authUser) router.push("/login");
@@ -50,17 +49,17 @@ const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
   }, [router, authUser]);
 
   const handleDismiss = () => {
-    modalRefTitle.current?.dismiss();
+    modalRefRecipe.current?.dismiss();
   };
 
   const handleContinue = async () => {
     if (userId) {
-      // store.setDishInfo(title.trim(), userId);
-      openSetDescriptionModal();
+      dish.setDishRecipe(recipe);
+      openSetPictureModal();
       modalRef.current?.dismiss();
 
       await presentAlert({
-        header: "Title added!",
+        header: "Recipe added!",
         buttons: ["OK"],
       });
     } else {
@@ -99,13 +98,17 @@ const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
 
   return (
     <IonModal
-      ref={modalRefTitle}
+      ref={modalRefRecipe}
       trigger="open-modal"
       // canDismiss={canDismiss}
       presentingElement={presentingElement!}
     >
-      <IonContent className="h-full w-full flex justify-center items-center">
-        <SetDescriptionModal modalRefDescription={modalRef} />
+      <IonContent
+        fullscreen
+        color={"white-background"}
+        className="h-full w-full flex justify-center items-center"
+      >
+        <SetPictureModal modalRefPicture={modalRef} />
         <IonHeader>
           <IonToolbar>
             <div>
@@ -127,29 +130,20 @@ const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
             </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <div>
-          <h2 className="text-center text-[rgb(174,176,184)] mt-10">
-            Hello there! <br />
-            It's wonderful to have you here. <br />
-            You are now starting the process of uploading <br />
-            your very own favorite food recipe, <br />
-            good luck!
-          </h2>
-        </div>
-        <div className="flex flex-col items-center justify-between h-[12rem] mt-28">
-          <h3> Please enter the desired name or title </h3>
-          <IonItem className={`${styles.noPadding} w-72`}>
-            <IonInput
-              className={"text-center text-[1.28rem] font-bold leading-10"}
-              value={title}
-              onIonChange={(e) => setTitle(e.detail.value?.toString() ?? "")}
-              placeholder="Recipe Title"
-            />
-          </IonItem>
-          <div className="pt-4 w-full px-6">
+
+        <div className="flex flex-col h-full justify-start w-full px-6 mt-10">
+          <h3 className="text-brand-black mb-1">
+            Please enter the recipe of the dish
+          </h3>
+          <RegularTextArea
+            changeCallback={setRecipe}
+            placeholder="Add the recipe for the dish...."
+            value={recipe}
+          />
+          <div className="pt-4">
             <RegularButton
               text="Next"
-              disabled={!title}
+              disabled={!recipe}
               onClick={() => handleContinue()}
               rounded
               theme="yellow"
@@ -161,4 +155,4 @@ const SetTitleModal: React.FC<ModalProps> = ({ modalRefTitle }) => {
   );
 };
 
-export default SetTitleModal;
+export default SetRecipeModal;

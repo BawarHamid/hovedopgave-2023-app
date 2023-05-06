@@ -13,7 +13,7 @@ const RegularTextArea: React.FC<Props> = ({
   placeholder = "",
   changeCallback,
 }) => {
-  const maxlength = 150;
+  const maxlength = 600;
 
   return (
     <>
