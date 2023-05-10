@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import { IonApp, IonLoading, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 
@@ -34,13 +34,37 @@ import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
 import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+import ProfileScreen from "./screens/authentication/ProfileScreen";
 
 // Test pages
 import TestFeedScreen from "./screens/feeds/TestFeedScreen";
+import { useAuthUserStore } from "./store/user";
+import { Session } from "@supabase/supabase-js";
+import { useState, useEffect } from "react";
+import { supabase } from "./apis/supabase/supabaseClient";
+
 
 setupIonicReact();
 
 const App = () => {
+  const [session, setSession] = useState<Session | null>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
+
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange(() => updateSession());
+    void updateSession();
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  const updateSession = async (): Promise<void> => {
+    const { data } = await supabase.auth.getSession();
+    setSession(data.session);
+    data.session && setAuthUser(data.session.user);
+    setLoading(false);
+  };
+  const userId = useAuthUserStore((state) => state.authUser?.id);
+  
   return (
     <IonApp className="bg-white">
       <IonReactRouter>
@@ -66,6 +90,10 @@ const App = () => {
           />
           {/* testing */}
           <Route exact path="/test-feed" component={TestFeedScreen} />
+          <Route exact path="/profile/:id" component={ProfileScreen} />
+          <Route exact path="/">
+              <Redirect to={session ? '/home' : '/welcome'} />
+            </Route>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

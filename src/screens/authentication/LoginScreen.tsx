@@ -29,6 +29,7 @@ const LoginScreen: React.FC = () => {
   const [presentAlert] = useIonAlert();
 
   const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
+  const userId = useAuthUserStore((state) => state.authUser?.id);
 
   useEffect(() => {
     setIsSubmitDisabled(!(email.includes("@") && password !== ""));
@@ -46,7 +47,9 @@ const LoginScreen: React.FC = () => {
       const hasProfile = await checkUserHasProfile(data.user.id);
       setAuthUser(data.user);
       await dismiss();
-      hasProfile ? router.push("/test-feed") : router.push("/profile-setup");
+      hasProfile
+        ? router.push(`/profile/${userId}`)
+        : router.push("/profile-setup");
     } else {
       await dismiss();
       await presentAlert({
