@@ -44,7 +44,15 @@ import { useState, useEffect } from "react";
 import { supabase } from "./apis/supabase/supabaseClient";
 
 
-setupIonicReact();
+/* CRUD for recipes */
+import SetDishPictureScreen from "./screens/create-food-recipe/SetDishPictureScreen";
+import SetDishDescriptionScreen from "./screens/create-food-recipe/SetDishDescriptionScreen";
+import SetDishInfoScreen from "./screens/create-food-recipe/SetDishInfoScreen";
+import SetDishRecipeScreen from "./screens/create-food-recipe/SetDishRecipeScreen";
+import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
+
+setupIonicReact({ mode: "ios" });
+// setupIonicReact();
 
 const App = () => {
   const [session, setSession] = useState<Session | null>();
@@ -88,6 +96,18 @@ const App = () => {
             path="/profile-picture"
             component={SetupProfilePictureScreen}
           />
+          <Route exact path="/select-type" component={SelectUploadTypeScreen} />
+
+          {/* create dish flow */}
+          <Route exact path="/set-info" component={SetDishInfoScreen} />
+          <Route
+            exact
+            path="/set-description"
+            component={SetDishDescriptionScreen}
+          />
+          <Route exact path="/set-recipe" component={SetDishRecipeScreen} />
+          <Route exact path="/set-picture" component={SetDishPictureScreen} />
+
           {/* testing */}
           <Route exact path="/test-feed" component={TestFeedScreen} />
           <Route exact path="/profile/:id" component={ProfileScreen} />

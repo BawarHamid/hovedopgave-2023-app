@@ -1,0 +1,21 @@
+ion-card-header {
+  padding: 1rem 1rem 0.4rem 1rem !important;
+}
+
+ion-card-content {
+  padding: 0.4rem 1rem 1rem 1rem !important;
+}
+
+.padding {
+  padding: 1rem 1rem 0.4rem 1rem !important;
+}
+
+.avatarBig {
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+}
+
+.avatarSmall {
+  width: 2.75rem !important;
+  height: 2.75rem !important;
+}

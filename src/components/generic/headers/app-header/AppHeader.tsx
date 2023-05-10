@@ -1,9 +1,16 @@
+import { IonIcon, IonImg, IonText } from "@ionic/react";
+import React from "react";
+import logoBlack from "../../../../static/assets/img/Foodzilla.svg";
+import logoWhite from "../../../../static/assets/img/innrcircleWhite.svg";
 import { IonIcon, IonText } from "@ionic/react";
 import React from "react";
 import style from "./AppHeader.module.css";
 
 type Icon = {
   icon: string;
+  onClick?:
+    | ((e: { preventDefault: () => void }) => Promise<void>)
+    | (() => void);
   onClick?:
     | ((e: { preventDefault: () => void }) => Promise<void>)
     | (() => void);
@@ -16,6 +23,7 @@ type AppHeaderProps = {
   skipIcon?: Icon;
   addIcon?: Icon;
   chatIcon?: Icon;
+  homeIcon?: Icon;
 };
 
 // test on phone if notification bar pushes or goes over contet
@@ -70,12 +78,25 @@ const AppHeader: React.FC<AppHeaderProps> = ({
           !isLogoLeftAndBackIcon ? "w-1/5" : "w-full"
         } items-end justify-end`}
       >
+      <div
+        className={`flex ${
+          !isLogoLeftAndBackIcon ? "w-1/5" : "w-full"
+        } items-end justify-end`}
+      >
         {skipIcon && (
           <IonText className="text-l text-red-600" onClick={skipIcon.onClick}>
             Skip
           </IonText>
         )}
-        
+        {homeIcon && (
+          <div className="flex mr-[-0.6rem]">
+            <IonIcon
+              icon={homeIcon.icon}
+              size="large"
+              onClick={homeIcon.onClick}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
