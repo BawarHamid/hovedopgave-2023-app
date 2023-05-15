@@ -2,23 +2,16 @@ import { IonIcon, IonImg, IonText } from "@ionic/react";
 import React from "react";
 import logoBlack from "../../../../static/assets/img/Foodzilla.svg";
 import logoWhite from "../../../../static/assets/img/innrcircleWhite.svg";
-import { IonIcon, IonText } from "@ionic/react";
-import React from "react";
-import style from "./AppHeader.module.css";
 
 type Icon = {
   icon: string;
   onClick?:
     | ((e: { preventDefault: () => void }) => Promise<void>)
     | (() => void);
-  onClick?:
-    | ((e: { preventDefault: () => void }) => Promise<void>)
-    | (() => void);
 };
 
 type AppHeaderProps = {
-  title?: string;
-  titleColor?: "black" | "white";
+  logoColor?: "black" | "white";
   backIcon?: Icon;
   skipIcon?: Icon;
   addIcon?: Icon;
@@ -28,56 +21,47 @@ type AppHeaderProps = {
 
 // test on phone if notification bar pushes or goes over contet
 const AppHeader: React.FC<AppHeaderProps> = ({
-  title = "Foodzilla",
-  titleColor = "",
+  logoColor = "black",
   skipIcon,
   backIcon,
-  
+  addIcon,
+  chatIcon,
+  homeIcon,
 }) => {
   const isLogoLeft =
-    !backIcon && !skipIcon ? true : false;
+    addIcon && chatIcon && !backIcon && !skipIcon && !homeIcon ? true : false;
   const isLogoLeftAndBackIcon =
-    backIcon && !skipIcon ? true : false;
+    addIcon && chatIcon && backIcon && !skipIcon && !homeIcon ? true : false;
 
   return (
     <div
-      className={`${
-        titleColor === "white" && "bg-transparent"
-      } flex h-[7.188rem] ${isLogoLeft && "justify-between"}`}
+      className={`${logoColor === "white" && "bg-transparent"} flex ${
+        isLogoLeft && "justify-between"
+      } px-5 py-10`}
     >
       {backIcon && (
         <div
           className={`flex ${
-            isLogoLeftAndBackIcon ? "w-1/8" : "w-1/5"
+            isLogoLeftAndBackIcon ? "w-1/3" : "w-1/5"
           } items-end`}
         >
-          {" "}
           <IonIcon
             icon={backIcon.icon}
             size="large"
-            className={`${
-              titleColor === "white" ? style.whiteIcon : style.blackIcon
+            className={`ml-[-0.6rem]
+              logoColor === "white" ? style.whiteIcon : style.blackIcon
             }`}
             onClick={backIcon.onClick}
           />
         </div>
       )}
-      <div
-        className={`flex w-3/5 items-end ${!isLogoLeft && "justify-center"}`}
-      >
-        <h1
-          className={`font-extrabold
-            ${titleColor === "white" && "text-white"}
-          `}
-        >
-          {title}
-        </h1>
+      <div className={`flex w-3/5 ${!isLogoLeft && "justify-center"}`}>
+        {logoColor === "black" ? (
+          <IonImg className="w-[7.5rem]" src={logoBlack} />
+        ) : (
+          <IonImg className="w-[7.5rem]" src={logoWhite} />
+        )}
       </div>
-      <div
-        className={`flex ${
-          !isLogoLeftAndBackIcon ? "w-1/5" : "w-full"
-        } items-end justify-end`}
-      >
       <div
         className={`flex ${
           !isLogoLeftAndBackIcon ? "w-1/5" : "w-full"
