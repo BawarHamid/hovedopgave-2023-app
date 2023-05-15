@@ -1,5 +1,3 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
   IonLoading,
@@ -7,6 +5,8 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import React, { useCallback, useEffect, useState } from "react";
+import { Redirect, Route } from "react-router-dom";
 import { Session } from "@supabase/supabase-js";
 import { useAuthUserStore } from "./store/user";
 import { supabase } from "./apis/supabase/supabaseClient";
@@ -43,6 +43,7 @@ import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
 import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+import ProfileScreen from "./screens/profile/ProfileScreen";
 import YourFeedScreen from "./screens/feeds/YourFeedScreen";
 
 // Test pages
@@ -58,19 +59,39 @@ import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
 
 setupIonicReact({ mode: "ios" });
 // setupIonicReact();
+
 const App: React.FC = () => {
+  const [session, setSession] = useState<Session | null>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
+
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange(() => updateSession());
+    void updateSession();
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  const updateSession = async (): Promise<void> => {
+    const { data } = await supabase.auth.getSession();
+    setSession(data.session);
+    data.session && setAuthUser(data.session.user);
+    setLoading(false);
+  };
+  const userId = useAuthUserStore((state) => state.authUser?.id);
+
   return (
     <IonApp className="bg-white">
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             {<Redirect to="/welcome" />}
-          </Route>
+          </Route> */}
 
           {/* Redirects */}
-          {/* <Route exact path="/"> - not working
-            <Redirect to={session ? "/home" : "/welcome"} />
-          </Route> */}
+          <Route exact path="/">
+            {/* <Redirect to="/welcome" /> */}
+            <Redirect to={session ? "/your-feed" : `/profile/${userId}`} />
+          </Route>
 
           {/* Auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
@@ -90,8 +111,10 @@ const App: React.FC = () => {
           />
           <Route exact path="/select-type" component={SelectUploadTypeScreen} />
 
-          {/* home/yourfeed*/}
-          <Route exact path="/home" component={YourFeedScreen} />
+          {/* yourfeed, profile*/}
+          <Route exact path="/your-feed" component={YourFeedScreen} />
+          {/* <Route exact path={`/profile/${userId}`} component={ProfileScreen} /> */}
+          <Route exact path="/profile/:id" component={ProfileScreen} />
 
           {/* create dish flow */}
           <Route exact path="/set-info" component={SetDishInfoScreen} />

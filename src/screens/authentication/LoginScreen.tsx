@@ -28,8 +28,8 @@ const LoginScreen: React.FC = () => {
   const [present, dismiss] = useIonLoading();
   const [presentAlert] = useIonAlert();
 
-  const authUser = useAuthUserStore((state) => state.authUser);
   const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
+  const userId = useAuthUserStore((state) => state.authUser?.id);
 
   useEffect(() => {
     setIsSubmitDisabled(!(email.includes("@") && password !== ""));
@@ -43,13 +43,13 @@ const LoginScreen: React.FC = () => {
       password,
     });
 
-    console.log(authUser?.id);
-
     if (data.user && data.user.aud === "authenticated") {
       const hasProfile = await checkUserHasProfile(data.user.id);
       setAuthUser(data.user);
       await dismiss();
-      hasProfile ? router.push("/select-type") : router.push("/profile-setup");
+      hasProfile
+        ? router.push(`/profile/${userId}`)
+        : router.push("/profile-setup");
     } else {
       await dismiss();
       await presentAlert({

@@ -1,4 +1,4 @@
-import { ProfileInsert } from "../../types/types";
+import { ProfileInsert, ProfileWithDish } from "../../types/types";
 import { uploadProfilePicture } from "../services/uploadFile.service";
 import { supabase } from "./supabaseClient";
 
@@ -47,4 +47,13 @@ export const checkUserHasProfile = async (uid: string) => {
     .eq("id", uid);
   if (error) throw error;
   return data.length > 0;
+};
+
+export const getProfileWithDish = async (uid: string) => {
+  const { data } = await supabase
+    .from("profile")
+    .select("*, dish(*)")
+    .eq("id", uid)
+    .single();
+  return data as ProfileWithDish;
 };
