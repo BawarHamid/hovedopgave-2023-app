@@ -28,6 +28,7 @@ const LoginScreen: React.FC = () => {
   const [present, dismiss] = useIonLoading();
   const [presentAlert] = useIonAlert();
 
+  const authUser = useAuthUserStore((state) => state.authUser);
   const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
   const userId = useAuthUserStore((state) => state.authUser?.id);
 
@@ -42,6 +43,8 @@ const LoginScreen: React.FC = () => {
       email,
       password,
     });
+
+    console.log(authUser?.id);
 
     if (data.user && data.user.aud === "authenticated") {
       const hasProfile = await checkUserHasProfile(data.user.id);
