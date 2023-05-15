@@ -41,9 +41,16 @@ export const uploadProfilePicture = async (file: File) => {
 export const uploadRecipePicture = async (file: File) => {
   const { data: userData } = await supabase.auth.getUser();
   if (userData.user) {
+    // const { data, error } = await supabase.storage
+    //   .from(publicBucket)
+    //   .upload(`${userData.user.id}/recipePicture`, file, { upsert: true }); -oprindelige
+
+    // .upload(`${userData.user.id}?${Math.random()}/recipePicture`, file, { -test
+
+    //nuværende for, at undgå cachefejl.
     const { data, error } = await supabase.storage
       .from(publicBucket)
-      .upload(`${userData.user.id}/recipePicture`, file, { upsert: true });
+      .upload(`${userData.user.id}/${file.name}`, file, { upsert: true });
     if (data) {
       const { data: image } = supabase.storage
         .from(publicBucket)

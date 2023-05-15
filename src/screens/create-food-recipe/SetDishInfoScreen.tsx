@@ -20,6 +20,7 @@ import { useHistory } from "react-router";
 import { useAuthUserStore } from "../../store/user";
 import { close } from "ionicons/icons";
 import RegularTextArea from "../../components/generic/styled-regulars/textarea/RegularTextArea";
+import RegularInput from "../../components/generic/styled-regulars/input/RegularInput";
 
 const SetDishTitleScreen: React.FC = () => {
   const history = useHistory();
@@ -43,7 +44,7 @@ const SetDishTitleScreen: React.FC = () => {
       router.push("/set-recipe");
 
       await presentAlert({
-        header: "Title added!",
+        header: "Info added!",
         buttons: ["OK"],
       });
     } else {
@@ -86,7 +87,7 @@ const SetDishTitleScreen: React.FC = () => {
             good luck!
           </h2>
         </div>
-        <div className="flex flex-col items-center h-[12rem] mt-10">
+        {/* <div className="flex flex-col items-center h-[12rem] mt-10">
           <h3 className="mb-3"> Please enter the desired name or title </h3>
           <IonItem className={`${styles.noPadding} w-80`}>
             <IonInput
@@ -113,6 +114,35 @@ const SetDishTitleScreen: React.FC = () => {
               text="Next"
               disabled={!title || !description}
               onClick={() => handleContinue()}
+              rounded
+              theme="yellow"
+            />
+          </div>
+        </div> */}
+
+        <div className="flex flex-col h-full w-full px-6 mt-10">
+          <div className="">
+            <h3> Please enter the desired name or title </h3>
+            <RegularInput
+              value={title}
+              changeCallback={setTitle}
+              placeholder="Recipe title..."
+            />
+          </div>
+
+          <div className="mt-5">
+            <h3>Please enter the description of the dish</h3>
+            <RegularTextArea
+              value={description}
+              changeCallback={setDescription}
+              placeholder="Add a description to your dish..."
+            />
+          </div>
+          <div className="mt-2">
+            <RegularButton
+              text="Next"
+              onClick={handleContinue}
+              disabled={!title || !description}
               rounded
               theme="yellow"
             />

@@ -21,7 +21,8 @@ export const useDishSetup = create<CreateDishStore>()((set) => ({
   recipe_picture: "",
   profile_fk: "",
 
-  setDishInfo: (title, description, profile_fk) => set({ title, profile_fk }),
+  setDishInfo: (title, description, profile_fk) =>
+    set({ title, description, profile_fk }),
   setDishRecipe: (recipe) => set({ recipe }),
   setRecipePicture: (recipe_picture) => set({ recipe_picture }),
 }));

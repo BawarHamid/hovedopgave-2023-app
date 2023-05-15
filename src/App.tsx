@@ -1,6 +1,15 @@
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
+import {
+  IonApp,
+  IonLoading,
+  IonRouterOutlet,
+  setupIonicReact,
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Session } from "@supabase/supabase-js";
+import { useAuthUserStore } from "./store/user";
+import { supabase } from "./apis/supabase/supabaseClient";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -34,6 +43,7 @@ import ProfileSetupScreen from "./screens/profile-setup/ProfileSetupScreen";
 import SetupProfilePictureScreen from "./screens/profile-setup/ProfilePictureSetupScreen";
 import ForgotPasswordScreen from "./screens/authentication/ForgotPasswordScreen";
 import CheckMailScreen from "./screens/authentication/CheckMailScreen";
+import YourFeedScreen from "./screens/feeds/YourFeedScreen";
 
 // Test pages
 import TestFeedScreen from "./screens/feeds/TestFeedScreen";
@@ -44,11 +54,11 @@ import SetDishDescriptionScreen from "./screens/create-food-recipe/SetDishDescri
 import SetDishInfoScreen from "./screens/create-food-recipe/SetDishInfoScreen";
 import SetDishRecipeScreen from "./screens/create-food-recipe/SetDishRecipeScreen";
 import SelectUploadTypeScreen from "./screens/upload/SelectUploadTypeScreen";
+// import ViewDishModal from "./components/modals/switch-between-modal/ViewDishModal";
 
 setupIonicReact({ mode: "ios" });
 // setupIonicReact();
-
-const App = () => {
+const App: React.FC = () => {
   return (
     <IonApp className="bg-white">
       <IonReactRouter>
@@ -56,7 +66,13 @@ const App = () => {
           <Route exact path="/">
             {<Redirect to="/welcome" />}
           </Route>
-          {/* Home, auth, profile-setup*/}
+
+          {/* Redirects */}
+          {/* <Route exact path="/"> - not working
+            <Redirect to={session ? "/home" : "/welcome"} />
+          </Route> */}
+
+          {/* Auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />
@@ -74,6 +90,9 @@ const App = () => {
           />
           <Route exact path="/select-type" component={SelectUploadTypeScreen} />
 
+          {/* home/yourfeed*/}
+          <Route exact path="/home" component={YourFeedScreen} />
+
           {/* create dish flow */}
           <Route exact path="/set-info" component={SetDishInfoScreen} />
           <Route
@@ -86,6 +105,7 @@ const App = () => {
 
           {/* testing */}
           <Route exact path="/test-feed" component={TestFeedScreen} />
+          {/* <Route exact path="/test1" component={ViewDishModal} /> */}
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

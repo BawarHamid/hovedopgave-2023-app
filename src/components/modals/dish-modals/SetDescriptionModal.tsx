@@ -13,10 +13,10 @@ import {
 } from "@ionic/react";
 import { close } from "ionicons/icons";
 import { useState, useEffect, useRef } from "react";
-import { useDishSetup } from "../../store/setup-upload-dish";
-import { useAuthUserStore } from "../../store/user";
-import RegularButton from "../generic/styled-regulars/button/RegularButton";
-import RegularTextArea from "../generic/styled-regulars/textarea/RegularTextArea";
+import { useDishSetup } from "../../../store/setup-upload-dish";
+import { useAuthUserStore } from "../../../store/user";
+import RegularButton from "../../generic/styled-regulars/button/RegularButton";
+import RegularTextArea from "../../generic/styled-regulars/textarea/RegularTextArea";
 import SetRecipeModal from "./SetRecipeModal";
 
 type ModalProps = {
