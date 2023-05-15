@@ -13,6 +13,7 @@ import {
   chevronForward,
   personCircleOutline,
   restaurant,
+  planetOutline,
 } from "ionicons/icons";
 import placeholderImg from "../../static/assets/img/foodtableimg.png";
 import { useHistory } from "react-router";
@@ -37,6 +38,12 @@ const SelectUploadTypeScreen: React.FC = () => {
             icon: chevronBack,
             onClick: () => {
               history.goBack();
+            },
+          }}
+          homeIcon={{
+            icon: planetOutline,
+            onClick: () => {
+              router.push("/your-feed");
             },
           }}
           profileIcon={{

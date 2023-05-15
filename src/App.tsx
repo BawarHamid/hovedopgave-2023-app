@@ -83,14 +83,15 @@ const App: React.FC = () => {
     <IonApp className="bg-white">
       <IonReactRouter>
         <IonRouterOutlet>
-          {/* <Route exact path="/">
-            {<Redirect to="/welcome" />}
+          {/* Redirects */}
+
+          {/* <Route exact path="/"> - not working, den korrekte
+            <Redirect to={session ? "/your-feed" : "/welcome"} />
           </Route> */}
 
-          {/* Redirects */}
           <Route exact path="/">
-            {/* <Redirect to="/welcome" /> */}
-            <Redirect to={session ? "/your-feed" : `/profile/${userId}`} />
+            {/* <Redirect to={session ? "/your-feed" : /profile/${userId}`} /> */}
+            <Redirect to={session ? "/your-feed" : "/your-feed"} />
           </Route>
 
           {/* Auth, profile-setup*/}

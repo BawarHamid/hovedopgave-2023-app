@@ -1,4 +1,4 @@
-import { IonIcon, IonImg, IonText } from "@ionic/react";
+import { IonIcon, IonImg, IonText, useIonRouter } from "@ionic/react";
 import React from "react";
 import logoBlack from "../../../../static/assets/img/Foodzilla.svg";
 import logoWhite from "../../../../static/assets/img/innrcircleWhite.svg";
@@ -39,6 +39,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
       ? true
       : false;
 
+  const router = useIonRouter();
+
   return (
     <div
       className={`${logoColor === "white" && "bg-transparent"} flex ${
@@ -63,7 +65,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({
       )}
       <div className={`flex w-3/5 ${!isLogoLeft && "justify-center"}`}>
         {logoColor === "black" ? (
-          <IonImg className="w-[7.5rem]" src={logoBlack} />
+          <IonImg
+            className="w-[7.5rem]"
+            src={logoBlack}
+            onClick={() => router.push("/your-feed")}
+          />
         ) : (
           <IonImg className="w-[7.5rem]" src={logoWhite} />
         )}
@@ -87,21 +93,21 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             />
           </div>
         )}
-        {homeIcon && (
-          <div className="flex mr-[-0.6rem]">
-            <IonIcon
-              icon={homeIcon.icon}
-              size="large"
-              onClick={homeIcon.onClick}
-            />
-          </div>
-        )}
         {profileIcon && (
           <div className="flex mr-[-0.6rem]">
             <IonIcon
               icon={profileIcon.icon}
               size="large"
               onClick={profileIcon.onClick}
+            />
+          </div>
+        )}
+        {homeIcon && (
+          <div className="flex mr-[-0.6rem]">
+            <IonIcon
+              icon={homeIcon.icon}
+              size="large"
+              onClick={homeIcon.onClick}
             />
           </div>
         )}

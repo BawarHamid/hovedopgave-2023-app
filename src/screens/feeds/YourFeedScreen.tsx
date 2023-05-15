@@ -1,6 +1,10 @@
 import { IonContent, IonPage, IonSpinner, useIonRouter } from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
-import { addCircleOutline, chevronBack } from "ionicons/icons";
+import {
+  addCircleOutline,
+  chevronBack,
+  personCircleOutline,
+} from "ionicons/icons";
 import { useHistory } from "react-router";
 import DishCard from "../../components/content/cards/DishCard";
 import { useEffect, useRef, useState } from "react";
@@ -46,7 +50,13 @@ const YourFeedScreen: React.FC = () => {
           addIcon={{
             icon: addCircleOutline,
             onClick: () => {
-              router.push("/set-info");
+              router.push("/select-type");
+            },
+          }}
+          profileIcon={{
+            icon: personCircleOutline,
+            onClick: () => {
+              router.push(`/profile/${authUser?.id}`);
             },
           }}
         />
