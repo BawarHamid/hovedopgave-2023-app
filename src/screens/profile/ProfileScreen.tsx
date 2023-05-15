@@ -32,7 +32,7 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
 
   useEffect(() => setIsYourProfile(userId === profile?.id), [userId, profile]);
 
-  console.log(isYourProfile);
+  // console.log(isYourProfile);
 
   const renderProfileHeader = (p: ProfileWithDish) => (
     <div className="flex flex-col pl-7 pr-3 mb-5">
@@ -94,7 +94,7 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
             <IonIcon
               icon={addCircle}
               size="large"
-             // className={`${style.blueIcon} `}
+              // className={`${style.blueIcon} `}
             />
           </div>
         </div>
@@ -135,6 +135,7 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
           dish &&
           Object.values(dish).map((dish) => (
             <DishCard
+              key={dish.id}
               dishSrc={dish.recipe_picture}
               dishTitle={dish.title}
               onClick={function (e: {
@@ -142,7 +143,7 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
               }): Promise<void> {
                 throw new Error("Function not implemented.");
               }}
-            ></DishCard>
+            />
           ))}
       </IonContent>
     </IonPage>

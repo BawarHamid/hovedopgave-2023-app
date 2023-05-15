@@ -79,19 +79,19 @@ const App: React.FC = () => {
   };
   const userId = useAuthUserStore((state) => state.authUser?.id);
 
-  // const App: React.FC = () => {
   return (
     <IonApp className="bg-white">
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             {<Redirect to="/welcome" />}
-          </Route>
+          </Route> */}
 
           {/* Redirects */}
-          {/* <Route exact path="/"> - session virker ikke
-            <Redirect to={session ? "/home" : "/welcome"} />
-          </Route> */}
+          <Route exact path="/">
+            {/* <Redirect to="/welcome" /> */}
+            <Redirect to={session ? "/your-feed" : `/profile/${userId}`} />
+          </Route>
 
           {/* Auth, profile-setup*/}
           <Route exact path="/welcome" component={LandingScreen} />
@@ -111,8 +111,9 @@ const App: React.FC = () => {
           />
           <Route exact path="/select-type" component={SelectUploadTypeScreen} />
 
-          {/* home/yourfeed, profile*/}
-          <Route exact path="/home" component={YourFeedScreen} />
+          {/* yourfeed, profile*/}
+          <Route exact path="/your-feed" component={YourFeedScreen} />
+          {/* <Route exact path={`/profile/${userId}`} component={ProfileScreen} /> */}
           <Route exact path="/profile/:id" component={ProfileScreen} />
 
           {/* create dish flow */}

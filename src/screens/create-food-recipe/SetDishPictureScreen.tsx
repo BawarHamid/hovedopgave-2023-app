@@ -72,7 +72,7 @@ const SetDishPictureScreen: React.FC = () => {
 
       dish.setRecipePicture(uploadData?.data.url || "");
       await insertNewDish(dishToInsert);
-      router.push("/home");
+      router.push("/your-feed");
 
       await presentAlert({
         header: "The dish was successfully created",

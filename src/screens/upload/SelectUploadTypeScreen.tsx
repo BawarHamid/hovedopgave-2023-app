@@ -29,8 +29,6 @@ const SelectUploadTypeScreen: React.FC = () => {
     if (!authUser) router.push("/login");
   }, [router, authUser]);
 
-  console.log(authUser?.id);
-
   return (
     <IonPage>
       <IonContent className="h-full w-full flex justify-center items-center">
@@ -44,7 +42,7 @@ const SelectUploadTypeScreen: React.FC = () => {
           profileIcon={{
             icon: personCircleOutline,
             onClick: () => {
-              router.push("/home");
+              router.push(`/profile/${authUser?.id}`);
             },
           }}
         />

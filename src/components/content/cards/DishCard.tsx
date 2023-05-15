@@ -1,6 +1,5 @@
 import { IonButton, IonButtons, IonCard, IonIcon, IonImg } from "@ionic/react";
 import { ellipsisVertical } from "ionicons/icons";
-import React from "react";
 
 type DishCardProps = {
   dishSrc: string;

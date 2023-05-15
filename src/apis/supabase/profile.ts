@@ -51,8 +51,9 @@ export const checkUserHasProfile = async (uid: string) => {
 
 export const getProfileWithDish = async (uid: string) => {
   const { data } = await supabase
-    .from('profile')
-    .select('*, dish(*)')
-    .eq('id', uid).single();
+    .from("profile")
+    .select("*, dish(*)")
+    .eq("id", uid)
+    .single();
   return data as ProfileWithDish;
 };
