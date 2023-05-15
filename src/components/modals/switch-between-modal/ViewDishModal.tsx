@@ -31,8 +31,10 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
   modalRef,
   selectedDish,
 }) => {
-  // const [checked, setChecked] = useState(false);
-  const [selectedSegment, setSelectedSegment] = useState<string>("");
+  const [selectedSegment, setSelectedSegment] = useState<string>("description");
+  const resetSegment = () => {
+    setSelectedSegment("description");
+  };
 
   return (
     <IonModal
@@ -40,6 +42,7 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
       trigger="open-modal"
       isOpen={!!selectedDish}
       className="shadow-none"
+      onDidDismiss={resetSegment}
     >
       <IonContent>
         <IonHeader>
@@ -81,7 +84,7 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
 
         <div className="mt-3 mx-10">
           <IonSegment
-            value={selectedSegment}
+            value={selectedSegment || "description"}
             className="rounded-full bg-blue-200"
             onIonChange={(e) =>
               setSelectedSegment(e.detail.value?.toString() ?? "")
