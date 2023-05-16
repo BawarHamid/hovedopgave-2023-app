@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuthUserStore } from "../../store/user";
 import { getAllDishes } from "../../apis/supabase/dish";
 import { Dish } from "../../types/types";
-import ViewDishModal from "../../components/modals/switch-between-modal/ViewDishModal";
+import ViewDishModal from "../../components/modals/view-dish-modal/ViewDishModal";
 
 const YourFeedScreen: React.FC = () => {
   const history = useHistory();
@@ -27,7 +27,7 @@ const YourFeedScreen: React.FC = () => {
       getAllDishes().then((d) => {
         d.data && setAllDishes(d.data);
       });
-  }, [router, authUser]);
+  }, [router, authUser, alldishes]);
 
   const openViewDishModal = (dish: Dish) => {
     setSelectedDish(dish);
@@ -61,7 +61,7 @@ const YourFeedScreen: React.FC = () => {
           }}
         />
 
-        <div className="flex justify-start text-[1.3rem] ml-6 pt-4 text-[rgb(157,159,166)]">
+        <div className="flex justify-start text-[1.3rem] ml-6  text-[rgb(157,159,166)]">
           Your Feed!
         </div>
         <div className="mt-[-15px]">
@@ -87,5 +87,4 @@ const YourFeedScreen: React.FC = () => {
     </IonPage>
   );
 };
-
 export default YourFeedScreen;

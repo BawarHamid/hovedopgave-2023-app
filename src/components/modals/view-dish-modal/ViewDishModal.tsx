@@ -10,17 +10,22 @@ import {
   IonSegment,
   IonSegmentButton,
   IonToolbar,
+  useIonAlert,
+  useIonLoading,
 } from "@ionic/react";
 import { Dish } from "../../../types/types";
 import {
   bookmarkOutline,
   closeCircleOutline,
   shareOutline,
+  trashOutline,
 } from "ionicons/icons";
 import styles from "./ViewDishModal.module.css";
 import { useState } from "react";
 import DescriptionCard from "../../content/cards/DescriptionCard";
 import RecipeCard from "../../content/cards/RecipeCard";
+import { useAuthUserStore } from "../../../store/user";
+import { DeleteDishByID } from "../../../apis/supabase/dish";
 
 type ViewDishModalProps = {
   selectedDish: Dish;
@@ -32,8 +37,31 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
   selectedDish,
 }) => {
   const [selectedSegment, setSelectedSegment] = useState<string>("description");
+  const [present, dismiss] = useIonLoading();
+  const [presentAlert] = useIonAlert();
+  const userId = useAuthUserStore((state) => state.authUser?.id);
   const resetSegment = () => {
     setSelectedSegment("description");
+  };
+
+  const handleDelete = async () => {
+    if (userId === selectedDish.profile_fk) {
+      await present({ message: "Deleting dish..." });
+      DeleteDishByID(selectedDish.id);
+      await dismiss();
+      await presentAlert({
+        header: "Delete successful",
+        message: "Your dish was deleted successfully!",
+        buttons: ["OK"],
+      });
+    } else {
+      await dismiss();
+      await presentAlert({
+        header: "An error occured",
+        message: "Incorrect user - Only creator of the dish can delete!",
+        buttons: ["OK"],
+      });
+    }
   };
 
   return (
@@ -67,6 +95,15 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
                 onClick={() => console.error("SAVE RECIPE FUNC IS MISSING!")}
               >
                 <IonIcon icon={bookmarkOutline} />
+              </IonButton>
+
+              <IonButton
+                onClick={() => {
+                  handleDelete();
+                  modalRef.current?.dismiss();
+                }}
+              >
+                <IonIcon icon={trashOutline} />
               </IonButton>
             </IonButtons>
           </IonToolbar>
