@@ -1,6 +1,17 @@
-import { IonButton, IonContent, IonIcon, IonPage } from "@ionic/react";
+import {
+  IonButton,
+  IonContent,
+  IonIcon,
+  IonPage,
+  useIonRouter,
+} from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
-import { addCircle, chevronBack } from "ionicons/icons";
+import {
+  addCircle,
+  chevronBack,
+  addCircleOutline,
+  planetOutline,
+} from "ionicons/icons";
 import { useState, useEffect } from "react";
 import { RouteComponentProps, useHistory } from "react-router";
 import { useAuthUserStore } from "../../store/user";
@@ -9,7 +20,6 @@ import { getProfileWithDish } from "../../apis/supabase/profile";
 import style from "antd/es/alert/style";
 import DishCard from "../../components/content/cards/DishCard";
 import CollapsableText from "../../components/generic/collapsable-text/CollapsableText";
-import AuthHeader from "../../components/generic/headers/auth-header/AuthHeader";
 
 type ProfilePageProps = RouteComponentProps<{
   id: string;
@@ -22,6 +32,7 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
   const [isYourProfile, setIsYourProfile] = useState<boolean>(false);
   const [dish, setDish] = useState<Dish[] | Dish>();
   const history = useHistory();
+  const router = useIonRouter();
 
   useEffect(() => {
     getProfileWithDish(match.params.id).then((response) => {
@@ -121,10 +132,25 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
 
   return (
     <IonPage>
-      <AuthHeader
-        title="Foodzilla"
-        icon={chevronBack}
-        onClick={() => history.goBack()}
+      <AppHeader
+        backIcon={{
+          icon: chevronBack,
+          onClick: () => {
+            history.goBack();
+          },
+        }}
+        addIcon={{
+          icon: addCircleOutline,
+          onClick: () => {
+            router.push("/select-type");
+          },
+        }}
+        homeIcon={{
+          icon: planetOutline,
+          onClick: () => {
+            router.push("/your-feed");
+          },
+        }}
       />
 
       <IonContent className="w-full h-full px-5">

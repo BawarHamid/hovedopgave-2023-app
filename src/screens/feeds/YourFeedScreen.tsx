@@ -1,13 +1,17 @@
 import { IonContent, IonPage, IonSpinner, useIonRouter } from "@ionic/react";
 import AppHeader from "../../components/generic/headers/app-header/AppHeader";
-import { addCircleOutline, chevronBack } from "ionicons/icons";
+import {
+  addCircleOutline,
+  chevronBack,
+  personCircleOutline,
+} from "ionicons/icons";
 import { useHistory } from "react-router";
 import DishCard from "../../components/content/cards/DishCard";
 import { useEffect, useRef, useState } from "react";
 import { useAuthUserStore } from "../../store/user";
 import { getAllDishes } from "../../apis/supabase/dish";
 import { Dish } from "../../types/types";
-import ViewDishModal from "../../components/modals/switch-between-modal/ViewDishModal";
+import ViewDishModal from "../../components/modals/view-dish-modal/ViewDishModal";
 
 const YourFeedScreen: React.FC = () => {
   const history = useHistory();
@@ -23,7 +27,7 @@ const YourFeedScreen: React.FC = () => {
       getAllDishes().then((d) => {
         d.data && setAllDishes(d.data);
       });
-  }, [router, authUser]);
+  }, [router, authUser, alldishes]);
 
   const openViewDishModal = (dish: Dish) => {
     setSelectedDish(dish);
@@ -46,12 +50,18 @@ const YourFeedScreen: React.FC = () => {
           addIcon={{
             icon: addCircleOutline,
             onClick: () => {
-              router.push("/set-info");
+              router.push("/select-type");
+            },
+          }}
+          profileIcon={{
+            icon: personCircleOutline,
+            onClick: () => {
+              router.push(`/profile/${authUser?.id}`);
             },
           }}
         />
 
-        <div className="flex justify-start text-[1.3rem] ml-6 pt-4 text-[rgb(157,159,166)]">
+        <div className="flex justify-start text-[1.3rem] ml-6  text-[rgb(157,159,166)]">
           Your Feed!
         </div>
         <div className="mt-[-15px]">
@@ -77,5 +87,4 @@ const YourFeedScreen: React.FC = () => {
     </IonPage>
   );
 };
-
 export default YourFeedScreen;
