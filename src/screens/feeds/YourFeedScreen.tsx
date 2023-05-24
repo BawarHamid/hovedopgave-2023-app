@@ -12,6 +12,7 @@ import { useAuthUserStore } from "../../store/user";
 import { getAllDishes } from "../../apis/supabase/dish";
 import { Dish } from "../../types/types";
 import ViewDishModal from "../../components/modals/view-dish-modal/ViewDishModal";
+import { Carousel } from "antd";
 
 const YourFeedScreen: React.FC = () => {
   const history = useHistory();
@@ -60,6 +61,32 @@ const YourFeedScreen: React.FC = () => {
             },
           }}
         />
+
+        <div className="flex justify-start text-[1.3rem] ml-6  text-[rgb(157,159,166)]">
+          Caroussel view!
+        </div>
+
+        <Carousel dots={false} draggable>
+          <div className="mt-[-15px]">
+            {alldishes ? (
+              <>
+                {alldishes?.map((d) => (
+                  <DishCard
+                    key={d.id}
+                    dishSrc={d.recipe_picture}
+                    dishTitle={d.title}
+                    onClick={() => openViewDishModal(d)}
+                  />
+                ))}
+              </>
+            ) : (
+              <div className="flex justify-center mt-48">
+                <h2>Please wait..</h2>
+                <IonSpinner />
+              </div>
+            )}
+          </div>
+        </Carousel>
 
         <div className="flex justify-start text-[1.3rem] ml-6  text-[rgb(157,159,166)]">
           Your Feed!
