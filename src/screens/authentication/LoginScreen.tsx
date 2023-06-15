@@ -1,3 +1,4 @@
+// imports
 import {
   IonContent,
   IonPage,
@@ -17,7 +18,9 @@ import { useAuthUserStore } from "../../store/user";
 import { supabase } from "../../apis/supabase/supabaseClient";
 import { checkUserHasProfile } from "../../apis/supabase/profile";
 
+// component declaration
 const LoginScreen: React.FC = () => {
+  // Hook and state declarations
   const history = useHistory();
 
   const [email, setEmail] = useState<string>("");
@@ -31,10 +34,12 @@ const LoginScreen: React.FC = () => {
   const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
   const userId = useAuthUserStore((state) => state.authUser?.id);
 
+  // side effect with useEffect, button disabled if conditions not met
   useEffect(() => {
     setIsSubmitDisabled(!(email.includes("@") && password !== ""));
   }, [email, password]);
 
+  // Supabase authentication, check if profile exists, redirect to profile or profile setup
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     await present({ message: "Signing in..." });
