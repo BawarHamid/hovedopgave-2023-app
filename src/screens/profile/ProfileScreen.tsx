@@ -12,7 +12,7 @@ import {
   addCircleOutline,
   planetOutline,
 } from "ionicons/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RouteComponentProps, useHistory } from "react-router";
 import { useAuthUserStore } from "../../store/user";
 import { Dish, ProfileWithDish } from "../../types/types";
@@ -20,6 +20,7 @@ import { getProfileWithDish } from "../../apis/supabase/profile";
 import style from "antd/es/alert/style";
 import DishCard from "../../components/content/cards/DishCard";
 import CollapsableText from "../../components/generic/collapsable-text/CollapsableText";
+import ViewDishModal from "../../components/modals/view-dish-modal/ViewDishModal";
 
 type ProfilePageProps = RouteComponentProps<{
   id: string;
@@ -33,6 +34,8 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
   const [dish, setDish] = useState<Dish[] | Dish>();
   const history = useHistory();
   const router = useIonRouter();
+  const modalRef = useRef<HTMLIonModalElement>(null);
+  const [selectedDish, setSelectedDish] = useState<Dish>();
 
   useEffect(() => {
     getProfileWithDish(match.params.id).then((response) => {
@@ -42,6 +45,11 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
   }, [match.params.id]);
 
   useEffect(() => setIsYourProfile(userId === profile?.id), [userId, profile]);
+
+  const openViewDishModal = (dish: Dish) => {
+    setSelectedDish(dish);
+    modalRef.current?.present();
+  };
 
   // console.log(isYourProfile);
 
@@ -154,6 +162,10 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
       />
 
       <IonContent className="w-full h-full px-5">
+        {selectedDish && (
+          <ViewDishModal modalRef={modalRef} selectedDish={selectedDish} />
+        )}
+
         {isYourProfile
           ? profile && renderYourProfileHeader(profile)
           : profile && renderProfileHeader(profile)}
@@ -164,11 +176,7 @@ const ProfileScreen: React.FC<ProfilePageProps> = ({ match }) => {
               key={dish.id}
               dishSrc={dish.recipe_picture}
               dishTitle={dish.title}
-              onClick={function (e: {
-                preventDefault: () => void;
-              }): Promise<void> {
-                throw new Error("Function not implemented.");
-              }}
+              onClick={() => openViewDishModal(dish)}
             />
           ))}
       </IonContent>
