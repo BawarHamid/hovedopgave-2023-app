@@ -67,7 +67,7 @@ const SetupProfilePictureScreen: React.FC = () => {
       profile.setProfilePicture(uploadData?.data.url || "");
       await insertNewProfile(profileToInsert);
 
-      router.push("/test-feed");
+      router.push("/your-feed");
 
       await presentAlert({
         header: "Profile is successfully created!",
