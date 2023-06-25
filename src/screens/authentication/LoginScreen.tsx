@@ -53,7 +53,8 @@ const LoginScreen: React.FC = () => {
       await dismiss();
       hasProfile
         ? router.push(`/profile/${userId}`)
-        : router.push("/profile-setup");
+        : // ? router.push("your-feed")
+          router.push("/profile-setup");
     } else {
       await dismiss();
       await presentAlert({
