@@ -14,13 +14,21 @@ import { Dish } from "../../types/types";
 import ViewDishModal from "../../components/modals/view-dish-modal/ViewDishModal";
 
 const YourFeedScreen: React.FC = () => {
-  const history = useHistory();
-  const router = useIonRouter();
+  // local state
   const [alldishes, setAllDishes] = useState<Dish[]>();
   const [selectedDish, setSelectedDish] = useState<Dish>();
+
+  // ion state and hooks
+  const history = useHistory();
+  const router = useIonRouter();
+
+  // refs
   const modalRef = useRef<HTMLIonModalElement>(null);
+
+  // global state
   const authUser = useAuthUserStore((state) => state.authUser);
 
+  // route protection and get dishes
   useEffect(() => {
     if (!authUser) router.push("/login");
     if (authUser)
@@ -29,6 +37,7 @@ const YourFeedScreen: React.FC = () => {
       });
   }, [router, authUser, alldishes]);
 
+  //modal input
   const openViewDishModal = (dish: Dish) => {
     setSelectedDish(dish);
     modalRef.current?.present();

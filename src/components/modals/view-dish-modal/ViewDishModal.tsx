@@ -27,6 +27,7 @@ import RecipeCard from "../../content/cards/RecipeCard";
 import { useAuthUserStore } from "../../../store/user";
 import { DeleteDishByID } from "../../../apis/supabase/dish";
 
+//Modal types
 type ViewDishModalProps = {
   selectedDish: Dish;
   modalRef: React.RefObject<HTMLIonModalElement>;
@@ -36,14 +37,18 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
   modalRef,
   selectedDish,
 }) => {
+  // ion state and hooks
   const [selectedSegment, setSelectedSegment] = useState<string>("description");
   const [present, dismiss] = useIonLoading();
   const [presentAlert] = useIonAlert();
-  const userId = useAuthUserStore((state) => state.authUser?.id);
   const resetSegment = () => {
     setSelectedSegment("description");
   };
 
+  // global state
+  const userId = useAuthUserStore((state) => state.authUser?.id);
+
+  //submit form for delete
   const handleDelete = async () => {
     if (userId === selectedDish.profile_fk) {
       await present({ message: "Deleting dish..." });
@@ -65,6 +70,7 @@ const ViewDishModal: React.FC<ViewDishModalProps> = ({
   };
 
   return (
+    //trigger for modal
     <IonModal
       ref={modalRef}
       trigger="open-modal"
